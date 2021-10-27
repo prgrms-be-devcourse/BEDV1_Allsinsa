@@ -1,5 +1,8 @@
 package com.progm.allsinsa.product.dto;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.progm.allsinsa.product.domain.Product;
 import com.progm.allsinsa.product.domain.ProductOption;
 import lombok.AccessLevel;
@@ -24,5 +27,11 @@ public class ProductOptionResponse {
                 productOption.getStock(),
                 productOption.getOption1(),
                 productOption.getOption2());
+    }
+
+    public static List<ProductOptionResponse> list(List<ProductOption> productOptions) {
+        return productOptions.stream()
+                .map(ProductOptionResponse::from)
+                .collect(Collectors.toList());
     }
 }

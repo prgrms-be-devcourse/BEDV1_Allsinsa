@@ -51,4 +51,14 @@ public class ProductOption extends BaseTime {
         this.option2 = option2;
     }
 
+    public int purchaseProductOption(int purchasedNum) {
+        if (stock >= purchasedNum) {
+            stock -= purchasedNum;
+        } else {
+            throw new IllegalArgumentException("재고가 부족합니다. product option " + id + "의 재고: " + stock);
+        }
+
+        return stock;
+    }
+
 }

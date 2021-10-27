@@ -1,5 +1,7 @@
 package com.progm.allsinsa.product.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +41,19 @@ public class ProductOptionService {
         return ProductOptionResponse.from(productOption);
     }
 
+    @Transactional(readOnly = true)
+    public List<ProductOptionResponse> findAllByProduct(Long productId) {
+        List<ProductOption> productOptions = productOptionRepository.findAllByProduct(getProduct(productId));
+        return ProductOptionResponse.list(productOptions);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ProductOptionResponse> findAllByProductAndOption1(Long productId, ProductOptionNameRequest request) {
+        List<ProductOption> productOptions = productOptionRepository.findAllByProductAndOption1(getProduct(productId),
+                request.getOption());
+        return ProductOptionResponse.list(productOptions);
+    }
+
     public ProductOptionResponse updateOption1(Long productOptionId, ProductOptionNameRequest request) {
         ProductOption productOption = getProductOption(productOptionId);
         productOption.updateOption1(request.getOption());
@@ -49,6 +64,11 @@ public class ProductOptionService {
         ProductOption productOption = getProductOption(productOptionId);
         productOption.updateOption2(request.getOption());
         return ProductOptionResponse.from(productOption);
+    }
+
+    public int purchase(Long productOptionId, int purchasedNum) {
+        ProductOption productOption = getProductOption(productOptionId);
+        return productOption.purchaseProductOption(purchasedNum);
     }
 
     public void delete(Long productOptionId) {
