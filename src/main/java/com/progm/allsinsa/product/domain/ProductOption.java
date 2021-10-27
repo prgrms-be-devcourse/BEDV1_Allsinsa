@@ -42,4 +42,13 @@ public class ProductOption extends BaseTime {
         this.option1 = option1;
         this.option2 = option2;
     }
+
+    public void updateOption1(String option1) {
+        this.option1 = option1;
+    }
+
+    public void updateOption2(String option2) {
+        this.option2 = option2;
+    }
+
 }
