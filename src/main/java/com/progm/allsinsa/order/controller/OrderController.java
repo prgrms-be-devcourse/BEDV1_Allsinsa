@@ -1,6 +1,5 @@
 package com.progm.allsinsa.order.controller;
 
-import com.progm.allsinsa.order.domain.Order;
 import com.progm.allsinsa.order.dto.CreateOrderRequestDto;
 import com.progm.allsinsa.order.dto.OrderDto;
 import com.progm.allsinsa.order.service.OrderService;
@@ -11,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api/v1/orders")
 public class OrderController {
     private final OrderService orderService;
 
