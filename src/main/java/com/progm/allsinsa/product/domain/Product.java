@@ -19,6 +19,9 @@ public class Product extends BaseTime {
     private Long id;
 
     private String name;
+    private int price;
+    private String status;
+    private String thumbnailImgPath;
 
     public Product(String name) {
         this.name = name;

@@ -18,6 +18,8 @@ public class ProductOptionResponse {
     private int stock;
     private String option1;
     private String option2;
+    private String createdAt;
+    private String updatedAt;
 
     public static ProductOptionResponse from(ProductOption productOption) {
         return new ProductOptionResponse(
@@ -25,7 +27,9 @@ public class ProductOptionResponse {
                 ProductDto.from(productOption.getProduct()),
                 productOption.getStock(),
                 productOption.getOption1(),
-                productOption.getOption2());
+                productOption.getOption2(),
+                productOption.getCreatedAt().toString(),
+                productOption.getUpdatedAt().toString());
     }
 
     public static List<ProductOptionResponse> list(List<ProductOption> productOptions) {
