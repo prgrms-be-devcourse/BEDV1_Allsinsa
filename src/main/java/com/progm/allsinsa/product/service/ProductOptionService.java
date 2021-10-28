@@ -54,15 +54,14 @@ public class ProductOptionService {
         return ProductOptionResponse.list(productOptions);
     }
 
-    public ProductOptionResponse updateOption1(Long productOptionId, ProductOptionNameRequest request) {
+    public ProductOptionResponse updateOptionName(Long productOptionId, int optionNumber,
+            ProductOptionNameRequest request) {
         ProductOption productOption = getProductOption(productOptionId);
-        productOption.updateOption1(request.getOption());
-        return ProductOptionResponse.from(productOption);
-    }
-
-    public ProductOptionResponse updateOption2(Long productOptionId, ProductOptionNameRequest request) {
-        ProductOption productOption = getProductOption(productOptionId);
-        productOption.updateOption2(request.getOption());
+        if (optionNumber == 1) {
+            productOption.updateOption1(request.getOption());
+        } else if (optionNumber == 2) {
+            productOption.updateOption2(request.getOption());
+        }
         return ProductOptionResponse.from(productOption);
     }
 
