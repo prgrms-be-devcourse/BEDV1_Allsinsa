@@ -2,7 +2,7 @@ package com.progm.allsinsa.cart;
 
 import com.progm.allsinsa.cart.cartProduct.CartProduct;
 import com.progm.allsinsa.cart.cartProduct.CartProductDto;
-import java.util.Optional;
+import com.progm.allsinsa.cart.cartProduct.CartProductRepository;
 import javassist.NotFoundException;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -10,10 +10,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class CartService {
     private final CartRepository cartRepository;
+    private final CartProductRepository cartProductRepository;
     private final CartConverter cartConverter;
 
-    public CartService(CartRepository cartRepository, CartConverter cartConverter) {
+    public CartService(CartRepository cartRepository,
+        CartProductRepository cartProductRepository,
+        CartConverter cartConverter) {
         this.cartRepository = cartRepository;
+        this.cartProductRepository = cartProductRepository;
         this.cartConverter = cartConverter;
     }
 
@@ -62,11 +66,11 @@ public class CartService {
         throws NotFoundException {
         Cart cart = cartRepository.findById(cartId)
             .orElseThrow(() -> new NotFoundException("장바구니 ID를 이용하여 상품을 장바구니에 추가할 수 없습니다."));
-        CartProduct cartProduct = new CartProduct(cartProductDto.getId(),
-            cartProductDto.getCount(), cartProductDto.getProductOptionDto());
+        CartProduct cartProduct = new CartProduct(cartProductDto.getCount(), cartProductDto.getProductOptionDto());
         cartProduct.setCart(cart);
+        CartProduct entity = cartProductRepository.save(cartProduct);
 
-        return cartProduct.getId();
+        return entity.getId();
     }
 
     // 장바구니 제품 수정

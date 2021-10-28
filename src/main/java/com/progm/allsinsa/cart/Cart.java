@@ -34,7 +34,7 @@ public class Cart {
     @Column(name="member_id", nullable = false)
     private Long member;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "cart", orphanRemoval = true)
     private List<CartProduct> cartProducts = new ArrayList<>();
 
     // construct
