@@ -1,4 +1,4 @@
-package com.progm.allsinsa.cart;
+package com.progm.allsinsa.cart.cart;
 
 import com.progm.allsinsa.cart.cartProduct.CartProduct;
 import java.util.ArrayList;
@@ -38,11 +38,11 @@ public class Cart {
     private List<CartProduct> cartProducts = new ArrayList<>();
 
     // construct
-    Cart(Long member) {
+    public Cart(Long member) {
         this.member = member;
     }
 
-    Cart(Long id, Long member) {
+    public Cart(Long id, Long member) {
         this(member);
         this.id = id;
     }

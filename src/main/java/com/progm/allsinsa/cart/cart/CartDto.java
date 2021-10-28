@@ -1,4 +1,4 @@
-package com.progm.allsinsa.cart;
+package com.progm.allsinsa.cart.cart;
 
 import com.progm.allsinsa.cart.cartProduct.CartProductDto;
 import java.util.List;

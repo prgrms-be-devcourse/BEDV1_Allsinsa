@@ -1,8 +1,7 @@
 package com.progm.allsinsa.cart.cartProduct;
 
-import com.progm.allsinsa.cart.Cart;
+import com.progm.allsinsa.cart.cart.Cart;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -73,4 +72,7 @@ public class CartProduct {
         this.productOption = productOption;
     }*/
 
+    public void setCount(int count) {
+        this.count = count;
+    }
 }
