@@ -80,8 +80,6 @@ class CartServiceTest {
         @Test
         @DisplayName("장바구니에 제품 추가")
         @Order(1)
-        @Transactional
-        @Rollback(value = false)
         void saveCartProduct() throws NotFoundException {
             CartProductDto cartProductDto = new CartProductDto(cartProductId, 0, productOptionDto);
             Long cartId = createCart(memberId);
@@ -105,8 +103,8 @@ class CartServiceTest {
 
             //log.info("resultCartProductDto : "+resultCartProductDto.get().getId().toString());
 
-//            assertNotNull(resultCartProductDto);
-//            assertEquals(cartProductId, resultCartProductDto.get().getId());
+            assertNotNull(resultCartProductDto);
+            assertEquals(resultCartProductId, resultCartProductDto.get().getId());
         }
     }
 }
