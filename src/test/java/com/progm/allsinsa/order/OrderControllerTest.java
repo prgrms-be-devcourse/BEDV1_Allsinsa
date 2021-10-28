@@ -99,13 +99,13 @@ public class OrderControllerTest {
         orderNumber1 = orderService.createOrder(dto1);
         orderNumber2 = orderService.createOrder(dto2);
 
-        mockMvc.perform(post("/orders")
+        mockMvc.perform(post("/api/v1/orders")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto1)))
                 .andExpect(status().isOk())
                 .andDo(print());
 
-        mockMvc.perform(post("/orders")
+        mockMvc.perform(post("/api/v1/orders")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto2)))
                 .andExpect(status().isOk())
@@ -114,7 +114,7 @@ public class OrderControllerTest {
 
     @Test
     public void findAllTest() throws Exception {
-        mockMvc.perform(get("/orders")
+        mockMvc.perform(get("/api/v1/orders")
                         .param("page", String.valueOf(0))
                         .param("size", String.valueOf(2))
                         .contentType(MediaType.APPLICATION_JSON))
@@ -124,14 +124,14 @@ public class OrderControllerTest {
 
     @Test
     public void findMemberOrderTest() throws Exception {
-        mockMvc.perform(get("/orders/{id}", memberId1)
+        mockMvc.perform(get("/api/v1/orders/{id}", memberId1)
                 .param("page", String.valueOf(0))
                 .param("size", String.valueOf(1))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
 
-        mockMvc.perform(get("/orders/{id}", memberId2)
+        mockMvc.perform(get("/api/v1/orders/{id}", memberId2)
                         .param("page", String.valueOf(0))
                         .param("size", String.valueOf(1))
                         .contentType(MediaType.APPLICATION_JSON))
