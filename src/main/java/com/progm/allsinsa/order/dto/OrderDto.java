@@ -8,6 +8,7 @@ public record OrderDto(
         String phoneNumber,
         String shippingAddress,
         String memo,
+        String orderNumber,
         int totalAmount,
         int savedAmount,
         int paymentAmount,

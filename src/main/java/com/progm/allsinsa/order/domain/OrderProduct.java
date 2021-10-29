@@ -38,16 +38,18 @@ public class OrderProduct {
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
 
-    // 매핑 다대일
-    private long productId;
+    private Long productId;
 
-    public OrderProduct(String productName, int price, int quantity, String productOption, String thumbnailImagePath, long productId) {
+    private Long productOptionId;
+
+    public OrderProduct(String productName, int price, int quantity, String productOption, String thumbnailImagePath, long productId, long productOptionId) {
         this.productName = productName;
         this.price = price;
         this.quantity = quantity;
         this.productOption = productOption;
         this.thumbnailImagePath = thumbnailImagePath;
         this.productId = productId;
+        this.productOptionId = productOptionId;
         this.orderStatus = OrderStatus.COMPLETE;
     }
 

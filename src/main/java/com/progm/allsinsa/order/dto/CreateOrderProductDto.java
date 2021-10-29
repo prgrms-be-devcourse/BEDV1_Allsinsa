@@ -5,6 +5,7 @@ public record CreateOrderProductDto(
         int price,
         int quantity,
         String productOption,
+        long productOptionId,
         String thumbnailImagePath,
         Long productId
 ) {

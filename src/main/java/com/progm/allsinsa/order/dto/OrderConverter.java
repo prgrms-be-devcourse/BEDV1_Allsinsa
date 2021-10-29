@@ -26,6 +26,7 @@ public class OrderConverter {
                 .map(this::convertOrderProductDto)
                 .collect(Collectors.toList());
         return new OrderDto(order.getRecipientName(),
+                order.getOrderNumber(),
                 order.getPhoneNumber(),
                 order.getShippingAddress(),
                 order.getMemo(),
@@ -44,7 +45,8 @@ public class OrderConverter {
                 createOrderProductDto.quantity(),
                 createOrderProductDto.productOption(),
                 createOrderProductDto.thumbnailImagePath(),
-                createOrderProductDto.productId());
+                createOrderProductDto.productId(),
+                createOrderProductDto.productOptionId());
     }
 
     public OrderProductDto convertOrderProductDto(OrderProduct orderProduct) {
