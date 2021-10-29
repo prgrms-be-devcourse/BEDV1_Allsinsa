@@ -29,7 +29,7 @@ public class OrderController {
         return ResponseEntity.ok(orderNumber);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/member/{id}")
     public ResponseEntity<Page<OrderDto>> getMemberOrder(@PathVariable("id") Long memberId, Pageable pageable) {
         Page<OrderDto> memberOrderDto = orderService.getMemberOrder(pageable, memberId);
         return ResponseEntity.ok(memberOrderDto);
