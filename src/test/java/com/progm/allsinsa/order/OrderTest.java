@@ -33,7 +33,7 @@ public class OrderTest {
                 2,
                 "사이즈 : S",
                 "https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.sportsseoul.com%2Fnews%2Fread%2F988300&psig=AOvVaw33h5sXl1K-OPcKgT7BmBGK&ust=1635391936561000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPj-tfLT6fMCFQAAAAAdAAAAABAD",
-                2L);
+                1L, 1L);
         Order order = new Order(1L,
                 "김현준",
                 "01026846867",

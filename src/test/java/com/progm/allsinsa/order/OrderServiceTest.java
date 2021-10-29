@@ -51,16 +51,18 @@ public class OrderServiceTest {
                 3000,
                 2,
                 "사이즈 : S",
+                1L,
                 "https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.sportsseoul.com%2Fnews%2Fread%2F988300&psig=AOvVaw33h5sXl1K-OPcKgT7BmBGK&ust=1635391936561000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPj-tfLT6fMCFQAAAAAdAAAAABAD",
-                2L
+                1L
         );
         CreateOrderProductDto createOrderProductDto2 = new CreateOrderProductDto(
                 "신발",
                 10000,
                 1,
                 "사이즈 : M",
+                3L,
                 "https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.sportsseoul.com%2Fnews%2Fread%2F988300&psig=AOvVaw33h5sXl1K-OPcKgT7BmBGK&ust=1635391936561000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPj-tfLT6fMCFQAAAAAdAAAAABAD",
-                3L
+                2L
         );
 
         CreateOrderRequestDto dto = new CreateOrderRequestDto(createOrderDto, List.of(createOrderProductDto1, createOrderProductDto2));
@@ -88,16 +90,18 @@ public class OrderServiceTest {
                 3000,
                 2,
                 "사이즈 : S",
+                1L,
                 "https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.sportsseoul.com%2Fnews%2Fread%2F988300&psig=AOvVaw33h5sXl1K-OPcKgT7BmBGK&ust=1635391936561000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPj-tfLT6fMCFQAAAAAdAAAAABAD",
-                2L
+                1L
         );
         CreateOrderProductDto createOrderProductDto2 = new CreateOrderProductDto(
                 "신발",
                 10000,
                 1,
                 "사이즈 : M",
+                5L,
                 "https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.sportsseoul.com%2Fnews%2Fread%2F988300&psig=AOvVaw33h5sXl1K-OPcKgT7BmBGK&ust=1635391936561000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPj-tfLT6fMCFQAAAAAdAAAAABAD",
-                3L
+                2L
         );
         CreateOrderDto createOrderDto2 = new CreateOrderDto(
                 2L,
@@ -112,16 +116,18 @@ public class OrderServiceTest {
                 3000,
                 2,
                 "사이즈 : S",
+                1L,
                 "https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.sportsseoul.com%2Fnews%2Fread%2F988300&psig=AOvVaw33h5sXl1K-OPcKgT7BmBGK&ust=1635391936561000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPj-tfLT6fMCFQAAAAAdAAAAABAD",
-                2L
+                1L
         );
         CreateOrderProductDto createOrderProductDto4 = new CreateOrderProductDto(
                 "신발",
                 10000,
                 1,
                 "사이즈 : M",
+                3L,
                 "https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.sportsseoul.com%2Fnews%2Fread%2F988300&psig=AOvVaw33h5sXl1K-OPcKgT7BmBGK&ust=1635391936561000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPj-tfLT6fMCFQAAAAAdAAAAABAD",
-                3L
+                2L
         );
         CreateOrderRequestDto dto1 = new CreateOrderRequestDto(createOrderDto1, List.of(createOrderProductDto1, createOrderProductDto2));
         CreateOrderRequestDto dto2 = new CreateOrderRequestDto(createOrderDto2, List.of(createOrderProductDto3, createOrderProductDto4));
@@ -148,6 +154,7 @@ public class OrderServiceTest {
                 3000,
                 2,
                 "사이즈 : S",
+                1L,
                 "https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.sportsseoul.com%2Fnews%2Fread%2F988300&psig=AOvVaw33h5sXl1K-OPcKgT7BmBGK&ust=1635391936561000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPj-tfLT6fMCFQAAAAAdAAAAABAD",
                 2L
         );
@@ -156,8 +163,9 @@ public class OrderServiceTest {
                 10000,
                 1,
                 "사이즈 : M",
+                5L,
                 "https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.sportsseoul.com%2Fnews%2Fread%2F988300&psig=AOvVaw33h5sXl1K-OPcKgT7BmBGK&ust=1635391936561000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPj-tfLT6fMCFQAAAAAdAAAAABAD",
-                3L
+                2L
         );
         CreateOrderDto createOrderDto2 = new CreateOrderDto(
                 2L,
@@ -172,16 +180,18 @@ public class OrderServiceTest {
                 3000,
                 2,
                 "사이즈 : S",
+                1L,
                 "https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.sportsseoul.com%2Fnews%2Fread%2F988300&psig=AOvVaw33h5sXl1K-OPcKgT7BmBGK&ust=1635391936561000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPj-tfLT6fMCFQAAAAAdAAAAABAD",
-                2L
+                1L
         );
         CreateOrderProductDto createOrderProductDto4 = new CreateOrderProductDto(
                 "신발",
                 10000,
                 1,
                 "사이즈 : M",
+                2L,
                 "https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.sportsseoul.com%2Fnews%2Fread%2F988300&psig=AOvVaw33h5sXl1K-OPcKgT7BmBGK&ust=1635391936561000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPj-tfLT6fMCFQAAAAAdAAAAABAD",
-                3L
+                2L
         );
         CreateOrderRequestDto dto1 = new CreateOrderRequestDto(createOrderDto1, List.of(createOrderProductDto1, createOrderProductDto2));
         CreateOrderRequestDto dto2 = new CreateOrderRequestDto(createOrderDto2, List.of(createOrderProductDto3, createOrderProductDto4));

@@ -47,14 +47,14 @@ public class OrderRepositoryTest {
                 2,
                 "사이즈 : S",
                 "https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.sportsseoul.com%2Fnews%2Fread%2F988300&psig=AOvVaw33h5sXl1K-OPcKgT7BmBGK&ust=1635391936561000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPj-tfLT6fMCFQAAAAAdAAAAABAD",
-                2L);
+                2L, 2L);
 
         OrderProduct orderProduct2 = new OrderProduct("신발",
                 10000,
                 1,
                 "사이즈 : M",
                 "https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.sportsseoul.com%2Fnews%2Fread%2F988300&psig=AOvVaw33h5sXl1K-OPcKgT7BmBGK&ust=1635391936561000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPj-tfLT6fMCFQAAAAAdAAAAABAD",
-                3L);
+                3L, 5L);
 
         order = new Order(memberId,
                 "김현준",
