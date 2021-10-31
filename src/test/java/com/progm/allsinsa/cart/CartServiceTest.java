@@ -5,7 +5,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.progm.allsinsa.cart.cart.Cart;
 import com.progm.allsinsa.cart.cart.CartDto;
 import com.progm.allsinsa.cart.cart.CartRepository;
+import com.progm.allsinsa.cart.cart.CartService;
 import com.progm.allsinsa.cart.cartProduct.CartProductDto;
+import com.progm.allsinsa.cart.cartProduct.CartProductService;
 import java.util.Optional;
 import javassist.NotFoundException;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 @DisplayName("CartServiceTest")
 @SpringBootTest
@@ -28,12 +31,20 @@ class CartServiceTest {
     CartService cartService;
 
     @Autowired
+    CartProductService cartProductService;
+
+    @Autowired
     CartRepository cartRepository;
 
     @Autowired
     CartConverter cartConverter;
 
     Logger log = LoggerFactory.getLogger(CartServiceTest.class);
+
+    @Test
+    void wrongDeleteCart() {
+        assertThrows(EmptyResultDataAccessException.class, ()->cartRepository.deleteById(150L));
+    }
 
     @Nested
     @DisplayName("장바구니 테스트")
@@ -72,7 +83,6 @@ class CartServiceTest {
     class CartProductTest {
         Long memberId = 200L;
         Long productOptionDto = 1L;
-        Long cartProductId = 0L;
 
         private Long createCart(Long memberId) {
             Long cartId = cartService.createCart(memberId);
@@ -84,23 +94,20 @@ class CartServiceTest {
         @Order(1)
         @DisplayName("장바구니에 제품 추가")
         void saveCartProduct() throws NotFoundException {
-            CartProductDto cartProductDto = new CartProductDto(cartProductId, 0, productOptionDto);
+            CartProductDto cartProductDto = new CartProductDto(null, 0, productOptionDto);
             Long cartId = createCart(memberId);
 
             CartDto cartDto = cartService.findCartById(cartId);
-            Cart cart = cartConverter.convertCart(cartDto);
 
-            CartProductDto productDto = cartService.saveCartProduct(cart.getId(),
+            CartProductDto cPDto = cartProductService.saveCartProduct(cartDto.getId(),
                 cartProductDto);
 
-            Long resultCartProductId = productDto.getId();
+            Long resultCartProductId = cPDto.getId();
 
             log.info("cartProductId : "+resultCartProductId.toString()); // TODO : 2...?
 
             cartDto = cartService.findCartById(cartId);
-            cart = cartConverter.convertCart(cartDto);
 
-            cartDto = cartConverter.convertCartDto(cart);
             Optional<CartProductDto> resultCartProductDto = cartDto.getCartProductDtos()
                 .stream().filter(t -> t.getId().equals(resultCartProductId))
                 .findAny();
@@ -119,8 +126,8 @@ class CartServiceTest {
 
             CartProductDto newCartProductDto = new CartProductDto(cartProductDto.getId(), fixedCount, cartProductDto.getProductOptionDto());
 
-            CartProductDto resultCartProductDto = cartService.updateCartProduct(newCartProductDto);
-            CartProductDto cartProductById = cartService.findCartProductById(
+            CartProductDto resultCartProductDto = cartProductService.updateCartProduct(newCartProductDto);
+            CartProductDto cartProductById = cartProductService.findCartProductById(
                 resultCartProductDto.getId());
 
             assertNotNull(cartProductById);
@@ -134,9 +141,9 @@ class CartServiceTest {
             CartDto cartDto = cartService.findCartByMemberId(memberId);
             CartProductDto cartProductDto = cartDto.getCartProductDtos().get(0);
 
-            cartService.deleteCartProduct(cartProductDto.getId());
+            cartProductService.deleteCartProduct(cartProductDto.getId());
 
-            assertThrows(NotFoundException.class, () -> cartService.findCartProductById(cartProductDto.getId()));
+            assertThrows(NotFoundException.class, () -> cartProductService.findCartProductById(cartProductDto.getId()));
         }
     }
 }

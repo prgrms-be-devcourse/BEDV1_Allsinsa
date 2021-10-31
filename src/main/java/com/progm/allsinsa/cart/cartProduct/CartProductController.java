@@ -1,14 +1,10 @@
 package com.progm.allsinsa.cart.cartProduct;
 
-import com.progm.allsinsa.cart.CartService;
-import java.util.List;
+import com.progm.allsinsa.cart.cart.CartService;
 import javassist.NotFoundException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,21 +12,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
-@RequestMapping("/api/v1/cart-product")
+@RequestMapping("/api/v1/cart-products")
 public class CartProductController {
-    private final CartService cartService;
+    private final CartProductService cartProductService;
 
-    public CartProductController(CartService cartService) {
-        this.cartService = cartService;
+    public CartProductController(CartProductService cartProductService) {
+        this.cartProductService = cartProductService;
     }
 
     // save cart product
     @PostMapping
     public ResponseEntity<CartProductDto> saveCartProduct(@RequestBody CartProductDto cartProductDto)
         throws NotFoundException {
-        CartProductDto dto = cartService.saveCartProduct(cartProductDto.getId(),
+        CartProductDto dto = cartProductService.saveCartProduct(cartProductDto.getId(),
             cartProductDto);
         return ResponseEntity.ok(dto);
     }
@@ -39,7 +34,7 @@ public class CartProductController {
     @DeleteMapping("/{cart_product_id}")
     public ResponseEntity<Long> deleteCartProduct(@PathVariable("cart_product_id") Long cartProductId)
         throws NotFoundException {
-        cartService.deleteCartProduct(cartProductId);
+        cartProductService.deleteCartProduct(cartProductId);
         return ResponseEntity.ok(cartProductId);
     }
 
@@ -47,7 +42,7 @@ public class CartProductController {
     @GetMapping("/{cart_product_id}")
     public ResponseEntity<CartProductDto> findCartProduct(@PathVariable("cart_product_id") Long cartProductId)
         throws NotFoundException {
-        CartProductDto cartProductDto = cartService.findCartProductById(cartProductId);
+        CartProductDto cartProductDto = cartProductService.findCartProductById(cartProductId);
         return ResponseEntity.ok(cartProductDto);
     }
 
@@ -55,7 +50,7 @@ public class CartProductController {
     @PutMapping
     public ResponseEntity<CartProductDto> fixCartProduct(@RequestBody CartProductDto cartProductDto)
         throws NotFoundException {
-        CartProductDto updatedCartProductDto = cartService.updateCartProduct(cartProductDto);
+        CartProductDto updatedCartProductDto = cartProductService.updateCartProduct(cartProductDto);
         return ResponseEntity.ok(updatedCartProductDto);
     }
 

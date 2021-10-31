@@ -1,11 +1,10 @@
-package com.progm.allsinsa.cart;
+package com.progm.allsinsa.cart.cartProduct;
 
+import com.progm.allsinsa.cart.CartConverter;
 import com.progm.allsinsa.cart.cart.Cart;
 import com.progm.allsinsa.cart.cart.CartDto;
 import com.progm.allsinsa.cart.cart.CartRepository;
-import com.progm.allsinsa.cart.cartProduct.CartProduct;
-import com.progm.allsinsa.cart.cartProduct.CartProductDto;
-import com.progm.allsinsa.cart.cartProduct.CartProductRepository;
+import com.progm.allsinsa.cart.cart.CartService;
 import java.util.List;
 import java.util.stream.Collectors;
 import javassist.NotFoundException;
@@ -13,51 +12,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class CartService {
+public class CartProductService {
     private final CartRepository cartRepository;
     private final CartProductRepository cartProductRepository;
     private final CartConverter cartConverter;
+    private final CartService cartService;
 
-    public CartService(CartRepository cartRepository,
+    public CartProductService(CartRepository cartRepository,
         CartProductRepository cartProductRepository,
-        CartConverter cartConverter) {
+        CartConverter cartConverter, CartService cartService) {
         this.cartRepository = cartRepository;
         this.cartProductRepository = cartProductRepository;
         this.cartConverter = cartConverter;
-    }
-
-    /* Cart */
-    // TODO : input MemberDto return cart.getId()
-    // 맴버가 생성되었을때 장바구니도 생성된다.
-    @Transactional
-    public Long createCart(Long memberId) {
-        Cart cart = new Cart(memberId);
-        Cart entity = cartRepository.save(cart);
-        return entity.getId();
-    }
-
-    // 맴버가 삭제되었을때 장바구니도 삭제된다.
-    @Transactional
-    public void deleteCart(Long cartId) throws NotFoundException {
-        Cart cart = cartRepository.findById(cartId)
-            .orElseThrow(() -> new NotFoundException("장바구니 ID를 찾을 수가 없어 장바구니를 삭제할 수 없습니다."));
-        cartRepository.delete(cart);
-    }
-
-    // 맴버 id를 이용하여 장바구니 조회
-    @Transactional(readOnly = true)
-    public CartDto findCartByMemberId(Long memberId) throws NotFoundException {
-        return cartRepository.findCartByMember(memberId)
-            .map(cartConverter::convertCartDto)
-            .orElseThrow(() -> new NotFoundException("맴버 ID를 이용하여 장바구니를 조회할 수 없습니다."));
-    }
-
-    // 장바구니 id를 이용하여 장바구니 조회
-    @Transactional(readOnly = true)
-    public CartDto findCartById(Long id) throws NotFoundException {
-        return cartRepository.findById(id)
-            .map(cartConverter::convertCartDto)
-            .orElseThrow(() -> new NotFoundException("장바구나 ID를 이용하여 장바구니를 조회할 수 없습니다."));
+        this.cartService = cartService;
     }
 
     /* CartProduct */
@@ -87,9 +54,7 @@ public class CartService {
 
     // 장바구니 제품 삭제
     @Transactional
-    public void deleteCartProduct(Long cartProductId) throws NotFoundException {
-        cartProductRepository.findById(cartProductId)
-            .orElseThrow(() -> new NotFoundException("장바구니 물품을 찾을 수 없습니다. 장바구니 물품을 삭제할 수 없습니다."));
+    public void deleteCartProduct(Long cartProductId) {
         cartProductRepository.deleteById(cartProductId);
     }
 
@@ -105,11 +70,10 @@ public class CartService {
     @Transactional(readOnly = true)
     public List<CartProductDto> findCartProductAll(Long memberId)
         throws NotFoundException {
-        CartDto cartDto = findCartByMemberId(memberId);
+        CartDto cartDto = cartService.findCartByMemberId(memberId);
         return cartProductRepository.findAllByCartId(cartDto.getId())
             .stream()
             .map(cartConverter::convertCartProductDto)
             .collect(Collectors.toList());
-
     }
 }
