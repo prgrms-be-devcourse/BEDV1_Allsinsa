@@ -23,8 +23,8 @@ import lombok.NoArgsConstructor;
 public class Cart {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     // TODO : Member
@@ -40,11 +40,6 @@ public class Cart {
     // construct
     public Cart(Long member) {
         this.member = member;
-    }
-
-    public Cart(Long id, Long member) {
-        this(member);
-        this.id = id;
     }
 
     // Mapping

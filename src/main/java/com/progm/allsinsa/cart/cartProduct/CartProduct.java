@@ -23,8 +23,8 @@ import lombok.NoArgsConstructor;
 public class CartProduct {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Column(name="count", nullable = false)
@@ -46,12 +46,6 @@ public class CartProduct {
         this.count = count;
         this.productOption = productOption;
     }
-
-    public CartProduct(Long id, int count, Long productOption) {
-        this(count, productOption);
-        this.id = id;
-    }
-
 
     public void setCart(Cart cart) {
         if(Objects.nonNull(this.cart)) {
