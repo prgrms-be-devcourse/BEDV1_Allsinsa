@@ -1,6 +1,5 @@
-package com.progm.allsinsa.cart.cart;
+package com.progm.allsinsa.cart.dto;
 
-import com.progm.allsinsa.cart.cartProduct.CartProductDto;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

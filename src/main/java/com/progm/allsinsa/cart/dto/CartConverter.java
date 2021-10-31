@@ -1,10 +1,9 @@
-package com.progm.allsinsa.cart;
+package com.progm.allsinsa.cart.dto;
 
-import com.progm.allsinsa.cart.cart.Cart;
-import com.progm.allsinsa.cart.cart.CartDto;
-import com.progm.allsinsa.cart.cartProduct.CartProduct;
-import com.progm.allsinsa.cart.cartProduct.CartProductDto;
-import java.util.List;
+import com.progm.allsinsa.cart.domain.Cart;
+import com.progm.allsinsa.cart.domain.CartProduct;
+import com.progm.allsinsa.cart.dto.CartDto;
+import com.progm.allsinsa.cart.dto.CartProductDto;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 

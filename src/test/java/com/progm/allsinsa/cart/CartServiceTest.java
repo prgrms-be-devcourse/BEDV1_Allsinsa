@@ -2,12 +2,13 @@ package com.progm.allsinsa.cart;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.progm.allsinsa.cart.cart.Cart;
-import com.progm.allsinsa.cart.cart.CartDto;
-import com.progm.allsinsa.cart.cart.CartRepository;
-import com.progm.allsinsa.cart.cart.CartService;
-import com.progm.allsinsa.cart.cartProduct.CartProductDto;
-import com.progm.allsinsa.cart.cartProduct.CartProductService;
+import com.progm.allsinsa.cart.domain.Cart;
+import com.progm.allsinsa.cart.dto.CartConverter;
+import com.progm.allsinsa.cart.dto.CartDto;
+import com.progm.allsinsa.cart.dto.CartProductDto;
+import com.progm.allsinsa.cart.repository.CartRepository;
+import com.progm.allsinsa.cart.service.CartProductService;
+import com.progm.allsinsa.cart.service.CartService;
 import java.util.Optional;
 import javassist.NotFoundException;
 import org.junit.jupiter.api.DisplayName;

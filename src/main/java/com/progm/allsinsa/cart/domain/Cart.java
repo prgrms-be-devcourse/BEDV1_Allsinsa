@@ -1,6 +1,5 @@
-package com.progm.allsinsa.cart.cart;
+package com.progm.allsinsa.cart.domain;
 
-import com.progm.allsinsa.cart.cartProduct.CartProduct;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;

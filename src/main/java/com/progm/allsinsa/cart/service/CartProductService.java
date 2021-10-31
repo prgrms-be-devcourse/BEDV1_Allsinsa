@@ -1,10 +1,12 @@
-package com.progm.allsinsa.cart.cartProduct;
+package com.progm.allsinsa.cart.service;
 
-import com.progm.allsinsa.cart.CartConverter;
-import com.progm.allsinsa.cart.cart.Cart;
-import com.progm.allsinsa.cart.cart.CartDto;
-import com.progm.allsinsa.cart.cart.CartRepository;
-import com.progm.allsinsa.cart.cart.CartService;
+import com.progm.allsinsa.cart.dto.CartConverter;
+import com.progm.allsinsa.cart.domain.Cart;
+import com.progm.allsinsa.cart.domain.CartProduct;
+import com.progm.allsinsa.cart.dto.CartDto;
+import com.progm.allsinsa.cart.dto.CartProductDto;
+import com.progm.allsinsa.cart.repository.CartProductRepository;
+import com.progm.allsinsa.cart.repository.CartRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import javassist.NotFoundException;

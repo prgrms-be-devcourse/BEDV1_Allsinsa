@@ -1,4 +1,4 @@
-package com.progm.allsinsa.cart.cartProduct;
+package com.progm.allsinsa.cart.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

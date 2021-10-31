@@ -1,5 +1,6 @@
-package com.progm.allsinsa.cart.cart;
+package com.progm.allsinsa.cart.repository;
 
+import com.progm.allsinsa.cart.domain.Cart;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 

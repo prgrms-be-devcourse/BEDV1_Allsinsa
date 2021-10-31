@@ -1,6 +1,5 @@
-package com.progm.allsinsa.cart.cartProduct;
+package com.progm.allsinsa.cart.domain;
 
-import com.progm.allsinsa.cart.cart.Cart;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
