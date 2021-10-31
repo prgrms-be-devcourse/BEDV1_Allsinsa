@@ -1,0 +1,28 @@
+### create cart
+POST http://localhost:8080/api/v1/cart/100
+
+### save cart product
+POST http://localhost:8080/api/v1/cart-product
+Content-Type: application/json
+
+{
+  "id" : 1,
+  "count" : 1,
+  "productOptionDto": 1
+}
+
+### find cart product
+GET http://localhost:8080/api/v1/cart-product/4
+
+### fix cart product
+PUT http://localhost:8080/api/v1/cart-product
+Content-Type: application/json
+
+{
+  "id" : 4,
+  "count" : 100,
+  "productOptionDto": 1
+}
+
+### delete cart product
+DELETE http://localhost:8080/api/v1/cart-product/2
