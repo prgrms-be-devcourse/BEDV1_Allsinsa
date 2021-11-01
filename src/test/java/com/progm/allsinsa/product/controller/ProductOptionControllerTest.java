@@ -20,11 +20,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.progm.allsinsa.product.dto.ProductDto;
 import com.progm.allsinsa.product.dto.ProductOptionNameRequest;
 import com.progm.allsinsa.product.dto.ProductOptionRequest;
 import com.progm.allsinsa.product.dto.ProductOptionResponse;
 import com.progm.allsinsa.product.dto.ProductOptionStockRequest;
+import com.progm.allsinsa.product.dto.ProductSimpleDto;
 import com.progm.allsinsa.product.service.ProductOptionService;
 
 @WebMvcTest(ProductOptionController.class)
@@ -40,14 +40,14 @@ class ProductOptionControllerTest {
     private ProductOptionService productOptionService;
 
     private Long productId;
-    private ProductDto productDto;
+    private ProductSimpleDto productDto;
     private Long productOptionId;
     private ProductOptionResponse productOptionResponse;
 
     @BeforeEach
     void setUp() {
         productId = 1L;
-        productDto = ProductDto.builder()
+        productDto = ProductSimpleDto.builder()
                 .id(productId)
                 .name("바지")
                 .price(1000)

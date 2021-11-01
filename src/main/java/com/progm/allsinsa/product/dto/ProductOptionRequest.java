@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductOptionRequest {
     @NotNull
-    private ProductDto productDto;
+    private ProductSimpleDto productDto;
 
     @Positive
     private int stock;

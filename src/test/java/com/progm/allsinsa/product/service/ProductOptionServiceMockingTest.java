@@ -21,9 +21,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.progm.allsinsa.product.domain.Product;
 import com.progm.allsinsa.product.domain.ProductOption;
-import com.progm.allsinsa.product.dto.ProductDto;
 import com.progm.allsinsa.product.dto.ProductOptionRequest;
 import com.progm.allsinsa.product.dto.ProductOptionResponse;
+import com.progm.allsinsa.product.dto.ProductSimpleDto;
 import com.progm.allsinsa.product.repository.ProductOptionRepository;
 import com.progm.allsinsa.product.repository.ProductRepository;
 import javassist.NotFoundException;
@@ -74,7 +74,7 @@ class ProductOptionServiceMockingTest {
     void createProductOption() throws NotFoundException {
         // given
         ProductOptionRequest request = ProductOptionRequest.builder()
-                .productDto(ProductDto.from(product))
+                .productDto(ProductSimpleDto.from(product))
                 .stock(stock)
                 .option1(option1)
                 .build();

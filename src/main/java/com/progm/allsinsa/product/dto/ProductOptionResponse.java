@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ProductOptionResponse {
     private Long id;
-    private ProductDto productDto;
+    private ProductSimpleDto productDto;
     private int stock;
     private String option1;
     private String option2;
@@ -26,7 +26,7 @@ public class ProductOptionResponse {
     public static ProductOptionResponse from(ProductOption productOption) {
         return new ProductOptionResponse(
                 productOption.getId(),
-                ProductDto.from(productOption.getProduct()),
+                ProductSimpleDto.from(productOption.getProduct()),
                 productOption.getStock(),
                 productOption.getOption1(),
                 productOption.getOption2(),
