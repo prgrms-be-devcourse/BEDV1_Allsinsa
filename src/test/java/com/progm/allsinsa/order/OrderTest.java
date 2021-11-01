@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.*;
 public class OrderTest {
 
     @Autowired
-    EntityManagerFactory emf;
+    private EntityManagerFactory emf;
 
     @Test
     public void 오더생성_테스트() {

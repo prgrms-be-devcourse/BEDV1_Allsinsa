@@ -29,15 +29,14 @@ import static org.hamcrest.Matchers.*;
 public class OrderRepositoryTest {
 
     @Autowired
-    OrderRepository repository;
+    private OrderRepository repository;
 
-    Order order;
-    String orderNumber;
-    Long memberId;
-    List<Order> orderList;
+    private Order order;
+    private String orderNumber;
+    private Long memberId;
+    private List<Order> orderList;
 
     @BeforeEach
-    @Test
     void setup() {
         memberId = 1L;
         orderList = new ArrayList<>();

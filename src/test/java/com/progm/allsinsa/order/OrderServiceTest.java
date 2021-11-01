@@ -25,16 +25,16 @@ import static org.hamcrest.Matchers.*;
 public class OrderServiceTest {
 
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
 
     @Autowired
-    OrderRepository orderRepository;
+    private OrderRepository orderRepository;
 
     @Autowired
-    OrderConverter orderConverter;
+    private OrderConverter orderConverter;
 
-    OrderDto orderDto;
-    String orderNumber;
+    private OrderDto orderDto;
+    private String orderNumber;
 
     @Transactional
     @BeforeEach

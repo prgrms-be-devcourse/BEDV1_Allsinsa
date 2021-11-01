@@ -34,7 +34,7 @@ public class OrderControllerTest {
     private OrderService orderService;
 
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     private String orderNumber1;
     private String orderNumber2;
