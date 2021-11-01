@@ -31,8 +31,8 @@ public class OrderController {
         return ResponseEntity.created(URI.create("/api/v1/orders/" + orderNumber)).body(orderNumber);
     }
 
-    @GetMapping("/member/{id}")
-    public ResponseEntity<Page<OrderDto>> getMemberOrder(@PathVariable("id") Long memberId, Pageable pageable) {
+    @GetMapping(params = {"memberId"})
+    public ResponseEntity<Page<OrderDto>> getMemberOrder(@RequestParam(value = "memberId") Long memberId, Pageable pageable) {
         Page<OrderDto> memberOrderDto = orderService.getMemberOrder(pageable, memberId);
         return ResponseEntity.ok(memberOrderDto);
     }

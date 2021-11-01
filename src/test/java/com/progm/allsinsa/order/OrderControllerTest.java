@@ -128,14 +128,16 @@ public class OrderControllerTest {
 
     @Test
     public void findMemberOrderTest() throws Exception {
-        mockMvc.perform(get("/api/v1/orders/member/{id}", memberId1)
-                .param("page", String.valueOf(0))
-                .param("size", String.valueOf(10))
-                .contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/api/v1/orders")
+                        .param("memberId", String.valueOf(memberId1))
+                        .param("page", String.valueOf(0))
+                        .param("size", String.valueOf(10))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
 
-        mockMvc.perform(get("/api/v1/orders/member/{id}", memberId2)
+        mockMvc.perform(get("/api/v1/orders")
+                        .param("memberId", String.valueOf(memberId2))
                         .param("page", String.valueOf(0))
                         .param("size", String.valueOf(10))
                         .contentType(MediaType.APPLICATION_JSON))
