@@ -18,7 +18,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.progm.allsinsa.exception.NotFoundException;
 import com.progm.allsinsa.product.domain.Product;
 import com.progm.allsinsa.product.domain.ProductOption;
 import com.progm.allsinsa.product.domain.ProductOptionRepository;
@@ -26,6 +25,7 @@ import com.progm.allsinsa.product.domain.ProductRepository;
 import com.progm.allsinsa.product.dto.ProductDto;
 import com.progm.allsinsa.product.dto.ProductOptionRequest;
 import com.progm.allsinsa.product.dto.ProductOptionResponse;
+import javassist.NotFoundException;
 
 @ExtendWith(MockitoExtension.class)
 class ProductOptionServiceMockingTest {
@@ -68,7 +68,7 @@ class ProductOptionServiceMockingTest {
 
     @DisplayName("제품 옵션 생성")
     @Test
-    void createProductOption() {
+    void createProductOption() throws NotFoundException {
         // given
         ProductOptionRequest request = ProductOptionRequest.builder()
                 .productDto(ProductDto.from(product))
@@ -130,7 +130,7 @@ class ProductOptionServiceMockingTest {
 
         @DisplayName("제품별 옵션 조회")
         @Test
-        void findAllByProduct() {
+        void findAllByProduct() throws NotFoundException {
             // given
             when(productOptionRepository.findAllByProduct(product))
                     .thenReturn(Arrays.asList(productOption, productOption2));

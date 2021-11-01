@@ -20,6 +20,7 @@ import com.progm.allsinsa.product.dto.ProductOptionRequest;
 import com.progm.allsinsa.product.dto.ProductOptionResponse;
 import com.progm.allsinsa.product.dto.ProductOptionStockRequest;
 import com.progm.allsinsa.product.service.ProductOptionService;
+import javassist.NotFoundException;
 
 @RequestMapping("/api/v1/products/{productId}/productOptions")
 @RestController
@@ -33,7 +34,7 @@ public class ProductOptionController {
 
     @PostMapping
     public ResponseEntity<ProductOptionResponse> createProductOption(@PathVariable Long productId,
-            @RequestBody @Valid ProductOptionRequest productOptionRequest) {
+            @RequestBody @Valid ProductOptionRequest productOptionRequest) throws NotFoundException {
         ProductOptionResponse response = productOptionService.create(productId, productOptionRequest);
 
         return ResponseEntity.created(
@@ -42,7 +43,8 @@ public class ProductOptionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductOptionResponse>> findAllByProduct(@PathVariable Long productId) {
+    public ResponseEntity<List<ProductOptionResponse>> findAllByProduct(@PathVariable Long productId) throws
+            NotFoundException {
         List<ProductOptionResponse> responses = productOptionService.findAllByProduct(productId);
         return ResponseEntity.ok(responses);
     }
@@ -51,7 +53,7 @@ public class ProductOptionController {
     public ResponseEntity<ProductOptionResponse> updateOptionName(
             @PathVariable Long productId,
             @PathVariable Long productOptionId,
-            @RequestBody @Valid ProductOptionNameRequest optionNameRequest) {
+            @RequestBody @Valid ProductOptionNameRequest optionNameRequest) throws NotFoundException {
 
         ProductOptionResponse response = productOptionService.updateOptionName(productOptionId, optionNameRequest);
 
@@ -61,7 +63,7 @@ public class ProductOptionController {
     @PatchMapping("/{productOptionId}/stock")
     public ResponseEntity<Integer> addStock(
             @PathVariable Long productOptionId,
-            @RequestBody @Valid ProductOptionStockRequest request) {
+            @RequestBody @Valid ProductOptionStockRequest request) throws NotFoundException {
         int stock = productOptionService.addStock(productOptionId, request.getAdditionalStock());
         return ResponseEntity.ok(stock);
     }
