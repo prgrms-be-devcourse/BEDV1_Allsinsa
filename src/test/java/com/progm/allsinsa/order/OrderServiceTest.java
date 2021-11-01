@@ -36,7 +36,6 @@ public class OrderServiceTest {
     private OrderDto orderDto;
     private String orderNumber;
 
-    @Transactional
     @BeforeEach
     public void createOrderTest() throws NotFoundException {
         CreateOrderDto createOrderDto = new CreateOrderDto(
