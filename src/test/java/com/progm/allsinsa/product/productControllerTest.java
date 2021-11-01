@@ -1,7 +1,8 @@
 package com.progm.allsinsa.product;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.progm.allsinsa.product.dto.ProductRequestDto;
+import com.progm.allsinsa.product.service.ProductService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -10,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -34,13 +34,21 @@ class productControllerTest {
     @Order(1)
     public void testCreate() throws Exception {
         // GIVEN
-        ProductRequestDto requestDto = new ProductRequestDto("새 상품", 20000, "카테고리2", "판매중", "/src/img", "src/thm", 1L);
+        ProductRequestDto requestDto = ProductRequestDto.builder()
+                .name("새 상품명")
+                .price(20000)
+                .category("카테고리2")
+                .status("판매중")
+                .productDetailImgPath("/src/img1")
+                .thumbnailImgPath("/src/thm2")
+                .sellerId(1L)
+                .build();
 
         // WHEN - THEN
-        mockMvc.perform(post("/api/v1/product")
+        mockMvc.perform(post("/api/v1/products")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestDto)))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andDo(print());
 
     }
@@ -49,11 +57,19 @@ class productControllerTest {
     @Order(2)
     public void testGetOne() throws Exception {
         // GIVEN
-        ProductRequestDto requestDto = new ProductRequestDto("새 상품2", 20000, "카테고리2", "판매중", "/src/img", "src/thm", 1L);
+        ProductRequestDto requestDto = ProductRequestDto.builder()
+                .name("새 상품명")
+                .price(20000)
+                .category("카테고리2")
+                .status("판매중")
+                .productDetailImgPath("/src/img1")
+                .thumbnailImgPath("/src/thm2")
+                .sellerId(1L)
+                .build();
         long savedId = productService.save(requestDto);
 
         // WHEN - THEN
-        mockMvc.perform(get("/api/v1/product/{id}",savedId)
+        mockMvc.perform(get("/api/v1/products/{id}",savedId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
@@ -64,11 +80,19 @@ class productControllerTest {
     @Order(3)
     public void testGetAll() throws Exception {
         // GIVEN
-        ProductRequestDto requestDto = new ProductRequestDto("새 상품2", 20000, "카테고리2", "판매중", "/src/img", "src/thm", 1L);
+        ProductRequestDto requestDto = ProductRequestDto.builder()
+                .name("새 상품명")
+                .price(20000)
+                .category("카테고리2")
+                .status("판매중")
+                .productDetailImgPath("/src/img1")
+                .thumbnailImgPath("/src/thm2")
+                .sellerId(1L)
+                .build();
         long savedId = productService.save(requestDto);
 
         // WHEN - THEN
-        mockMvc.perform(get("/api/v1/product/")
+        mockMvc.perform(get("/api/v1/products/")
                         .param("page",String.valueOf(0))
                         .param("size",String.valueOf(10))
                         .contentType(MediaType.APPLICATION_JSON))
@@ -84,7 +108,7 @@ class productControllerTest {
         String category = "카테고리2";
 
         // WHEN - THEN
-        mockMvc.perform(get("/api/v1/product/category")
+        mockMvc.perform(get("/api/v1/products/category")
                         .param("category",category)
                         .param("page",String.valueOf(0))
                         .param("size",String.valueOf(10))

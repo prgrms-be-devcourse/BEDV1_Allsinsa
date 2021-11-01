@@ -1,12 +1,13 @@
-package com.progm.allsinsa.product;
+package com.progm.allsinsa.product.dto;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProductRequestDto {
     private String name;
     private int price;

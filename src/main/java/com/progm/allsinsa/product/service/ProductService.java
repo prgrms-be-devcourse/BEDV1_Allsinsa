@@ -1,14 +1,16 @@
-package com.progm.allsinsa.product;
+package com.progm.allsinsa.product.service;
 
+import com.progm.allsinsa.product.dto.ProductConverter;
+import com.progm.allsinsa.product.domain.Product;
+import com.progm.allsinsa.product.dto.ProductDto;
+import com.progm.allsinsa.product.dto.ProductRequestDto;
+import com.progm.allsinsa.product.repository.ProductRepository;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 
 @Service
@@ -30,10 +32,7 @@ public class ProductService {
     }
 
     public Page<ProductDto> findAllByCategory(String categoryName, Pageable pageable){
-        List<ProductDto> productDtos = productRepository.findProductsByCategory(categoryName, pageable).stream()
-                .map(productConverter::convertToProductDto).toList();
-        return new PageImpl<>(productDtos,pageable,productDtos.size());
-
+        return productRepository.findProductsByCategory(categoryName, pageable);
     }
 
     public ProductDto findOneById(long productId) throws NotFoundException {

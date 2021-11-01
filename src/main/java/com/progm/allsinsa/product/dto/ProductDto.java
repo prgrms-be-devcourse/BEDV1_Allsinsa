@@ -1,14 +1,16 @@
-package com.progm.allsinsa.product;
+package com.progm.allsinsa.product.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
 @Builder
+@ToString
 public class ProductDto {
     private long id;
     private String name;

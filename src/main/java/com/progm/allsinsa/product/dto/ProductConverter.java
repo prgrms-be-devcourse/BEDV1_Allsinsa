@@ -1,14 +1,12 @@
-package com.progm.allsinsa.product;
+package com.progm.allsinsa.product.dto;
 
+import com.progm.allsinsa.product.domain.Product;
+import com.progm.allsinsa.product.dto.ProductDto;
+import com.progm.allsinsa.product.dto.ProductRequestDto;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProductConverter {
-    public Product convertToProduct(ProductDto productDto){
-        return new Product(productDto.getName(),productDto.getPrice(),productDto.getCategory(), productDto.getStatus(),
-                productDto.getProductDetailImgPath(), productDto.getThumbnailImgPath(),productDto.getCreatedAt(),productDto.getUpdatedAt(), productDto.getSellerId());
-    }
-
     public Product convertRequestToProduct(ProductRequestDto productRequestDto){
         return new Product(productRequestDto.getName(),productRequestDto.getPrice(),productRequestDto.getCategory(), productRequestDto.getStatus(),
                 productRequestDto.getProductDetailImgPath(), productRequestDto.getThumbnailImgPath(),productRequestDto.getSellerId());

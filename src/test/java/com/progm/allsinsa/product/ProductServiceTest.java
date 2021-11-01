@@ -1,6 +1,12 @@
 package com.progm.allsinsa.product;
 
+import com.progm.allsinsa.product.domain.Product;
+import com.progm.allsinsa.product.dto.ProductDto;
+import com.progm.allsinsa.product.dto.ProductRequestDto;
+import com.progm.allsinsa.product.repository.ProductRepository;
+import com.progm.allsinsa.product.service.ProductService;
 import javassist.NotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +18,7 @@ import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
+@Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductServiceTest {
     @Autowired
@@ -25,7 +32,16 @@ class ProductServiceTest {
     @DisplayName("새 상품을 추가할 수 있다.")
     public void testSave() {
         // GIVEN
-        ProductRequestDto requestDto = new ProductRequestDto("새 상품명", 20000, "카테고리1", "판매중", "/src/img1", "/src/thm2", 1L);
+        ProductRequestDto requestDto = ProductRequestDto.builder()
+                .name("새 상품명")
+                .price(20000)
+                .category("카테고리1")
+                .status("판매중")
+                .productDetailImgPath("/src/img1")
+                .thumbnailImgPath("/src/thm2")
+                .sellerId(1L)
+                .build();
+
         // WHEN
         long saveId = productService.save(requestDto);
         // THEN
@@ -42,7 +58,15 @@ class ProductServiceTest {
     @DisplayName("상품 Id로 상품 정보를 찾을 수 있다.")
     public void testGetOne() throws NotFoundException {
         // GIVEN
-        ProductRequestDto requestDto = new ProductRequestDto("새 상품명", 20000, "카테고리1", "판매중", "/src/img1", "/src/thm2", 1L);
+        ProductRequestDto requestDto = ProductRequestDto.builder()
+                .name("새 상품명")
+                .price(20000)
+                .category("카테고리1")
+                .status("판매중")
+                .productDetailImgPath("/src/img1")
+                .thumbnailImgPath("/src/thm2")
+                .sellerId(1L)
+                .build();
         long productId = productService.save(requestDto);
 
         // WHEN
@@ -84,6 +108,8 @@ class ProductServiceTest {
         ProductDto firstPageResult = allByCategory.get().findFirst().get();
 
         // THEN
+        log.info("size: {}", allByCategory.getTotalElements());
+        log.info("allByCategory(ProductDto): {}", firstPageResult);
         assertThat(firstPageResult.getCategory(),is(categoryName));
 
     }

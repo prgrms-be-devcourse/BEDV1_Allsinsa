@@ -1,15 +1,19 @@
-package com.progm.allsinsa.product;
+package com.progm.allsinsa.product.controller;
 
+import com.progm.allsinsa.product.dto.ProductDto;
+import com.progm.allsinsa.product.dto.ProductRequestDto;
+import com.progm.allsinsa.product.service.ProductService;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+
 @RestController
-@RequestMapping("/api/v1/product")
+@RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
 public class productController {
 
@@ -18,7 +22,8 @@ public class productController {
     @PostMapping
     public ResponseEntity<Long> save(@RequestBody ProductRequestDto requestDto){
         long savedId = productService.save(requestDto);
-        return ResponseEntity.ok(savedId);
+        return ResponseEntity.created(URI.create("/api/v1/products/"+savedId))
+                .body(savedId);
     }
 
     @GetMapping
