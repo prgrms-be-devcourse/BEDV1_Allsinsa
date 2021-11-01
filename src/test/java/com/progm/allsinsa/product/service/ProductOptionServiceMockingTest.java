@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -20,11 +21,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.progm.allsinsa.product.domain.Product;
 import com.progm.allsinsa.product.domain.ProductOption;
-import com.progm.allsinsa.product.domain.ProductOptionRepository;
-import com.progm.allsinsa.product.domain.ProductRepository;
 import com.progm.allsinsa.product.dto.ProductDto;
 import com.progm.allsinsa.product.dto.ProductOptionRequest;
 import com.progm.allsinsa.product.dto.ProductOptionResponse;
+import com.progm.allsinsa.product.repository.ProductOptionRepository;
+import com.progm.allsinsa.product.repository.ProductRepository;
 import javassist.NotFoundException;
 
 @ExtendWith(MockitoExtension.class)
@@ -61,6 +62,8 @@ class ProductOptionServiceMockingTest {
                 .option1(option1)
                 .option2(option2)
                 .build();
+        productOption.setCreatedAt(LocalDateTime.now());
+        productOption.setUpdatedAt(LocalDateTime.now());
 
         Mockito.lenient().when(productRepository.findById(productId))
                 .thenReturn(Optional.of(product));
@@ -91,6 +94,21 @@ class ProductOptionServiceMockingTest {
         );
     }
 
+    @Test
+    @DisplayName("제품 옵션 구매시 재고 부족 예외")
+    void purchaseProductOption() {
+        // given
+        int purchasedNum = 15;
+        when(productOptionRepository.findById(any()))
+                .thenReturn(Optional.of(productOption));
+
+        // when, then
+        assertThatThrownBy(() -> productOptionService.purchase(anyLong(), purchasedNum))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("재고가 부족합니다. product option ")
+                .hasMessageContaining("의 재고: " + stock);
+    }
+
     @DisplayName("제품 옵션 조회")
     @Nested
     class readTest {
@@ -111,6 +129,8 @@ class ProductOptionServiceMockingTest {
                     .option1(opt1)
                     .option2(opt2)
                     .build();
+            productOption2.setCreatedAt(LocalDateTime.now());
+            productOption2.setUpdatedAt(LocalDateTime.now());
         }
 
         @DisplayName("존재하지 않는 아이디로 옵션 조회")
