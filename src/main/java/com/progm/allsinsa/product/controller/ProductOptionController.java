@@ -47,20 +47,18 @@ public class ProductOptionController {
         return ResponseEntity.ok(responses);
     }
 
-    @PatchMapping("/{productOptionId}/optionNames/{optionNumber}")
+    @PatchMapping("/{productOptionId}/optionName")
     public ResponseEntity<ProductOptionResponse> updateOptionName(
             @PathVariable Long productId,
             @PathVariable Long productOptionId,
-            @PathVariable int optionNumber,
             @RequestBody @Valid ProductOptionNameRequest optionNameRequest) {
 
-        ProductOptionResponse response = productOptionService.updateOptionName(productOptionId, optionNumber,
-                optionNameRequest);
+        ProductOptionResponse response = productOptionService.updateOptionName(productOptionId, optionNameRequest);
 
         return ResponseEntity.ok(response);
     }
 
-    @PatchMapping("/{productOptionId}")
+    @PatchMapping("/{productOptionId}/stock")
     public ResponseEntity<Integer> addStock(
             @PathVariable Long productOptionId,
             @RequestBody @Valid ProductOptionStockRequest request) {

@@ -51,18 +51,13 @@ public class ProductOptionService {
     @Transactional(readOnly = true)
     public List<ProductOptionResponse> findAllByProductAndOption1(Long productId, ProductOptionNameRequest request) {
         List<ProductOption> productOptions = productOptionRepository.findAllByProductAndOption1(getProduct(productId),
-                request.getOption());
+                request.getOption1());
         return ProductOptionResponse.list(productOptions);
     }
 
-    public ProductOptionResponse updateOptionName(Long productOptionId, int optionNumber,
-            ProductOptionNameRequest request) {
+    public ProductOptionResponse updateOptionName(Long productOptionId, ProductOptionNameRequest request) {
         ProductOption productOption = getProductOption(productOptionId);
-        if (optionNumber == 1) {
-            productOption.updateOption1(request.getOption());
-        } else if (optionNumber == 2) {
-            productOption.updateOption2(request.getOption());
-        }
+        productOption.updateOptionName(request.getOption1(), request.getOption2());
         return ProductOptionResponse.from(productOption);
     }
 

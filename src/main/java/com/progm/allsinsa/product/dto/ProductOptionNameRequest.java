@@ -16,5 +16,8 @@ public class ProductOptionNameRequest {
 
     @NotBlank
     @Length(max = 100)
-    private String option;
+    private String option1;
+
+    @Length(max = 100)
+    private String option2;
 }
