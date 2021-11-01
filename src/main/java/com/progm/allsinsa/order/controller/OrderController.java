@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+
 @RestController
 @RequestMapping("/api/v1/orders")
 public class OrderController {
@@ -26,7 +28,7 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<String> createOrder(@RequestBody CreateOrderRequestDto createOrderRequestDto) {
         String orderNumber = orderService.createOrder(createOrderRequestDto);
-        return ResponseEntity.ok(orderNumber);
+        return ResponseEntity.created(URI.create("/api/v1/orders/" + orderNumber)).body(orderNumber);
     }
 
     @GetMapping("/member/{id}")

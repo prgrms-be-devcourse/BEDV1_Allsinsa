@@ -33,19 +33,19 @@ public class OrderService {
         return order.getOrderNumber();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public OrderDto getOrder(String orderNumber) throws NotFoundException {
         return orderConverter.convertOrderDto(orderRepository.findByOrderNumber(orderNumber)
-                .orElseThrow(() -> new NotFoundException("해당 번호의 주문 정보가 없습니다.")));
+                .orElseThrow(() -> new NotFoundException(orderNumber + "해당 번호의 주문 정보가 없습니다.")));
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Page<OrderDto> getMemberOrder(Pageable pageable, Long memberId) {
         return orderRepository.findAllByMemberId(pageable, memberId)
                 .map(orderConverter::convertOrderDto);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Page<OrderDto> getAllOrder(Pageable pageable) {
         return orderRepository.findAll(pageable)
                 .map(orderConverter::convertOrderDto);

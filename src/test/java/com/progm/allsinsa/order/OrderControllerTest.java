@@ -106,13 +106,13 @@ public class OrderControllerTest {
         mockMvc.perform(post("/api/v1/orders")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto1)))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andDo(print());
 
         mockMvc.perform(post("/api/v1/orders")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto2)))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andDo(print());
     }
 
