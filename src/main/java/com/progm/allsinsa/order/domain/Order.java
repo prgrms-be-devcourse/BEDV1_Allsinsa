@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -66,14 +67,18 @@ public class Order {
     private LocalDateTime updatedAt;
 
     public Order(Long memberId, String recipientName, String phoneNumber, String shippingAddress, String memo, int totalAmount) {
-        this.orderNumber = UUID.randomUUID().toString();
         this.memberId = memberId;
         this.recipientName = recipientName;
         this.phoneNumber = phoneNumber;
+        this.orderNumber = createOrderNumber();
         this.shippingAddress = shippingAddress;
         this.memo = memo;
         this.totalAmount = totalAmount;
         this.orderStatus = OrderStatus.COMPLETE;
+    }
+
+    private String createOrderNumber() {
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + UUID.randomUUID();
     }
 
     public void addOrderProduct(OrderProduct orderProduct) {
