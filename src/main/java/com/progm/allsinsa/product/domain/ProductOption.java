@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.progm.allsinsa.global.domain.BaseTime;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

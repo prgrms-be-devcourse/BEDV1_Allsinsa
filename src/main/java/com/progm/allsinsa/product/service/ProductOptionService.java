@@ -7,11 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.progm.allsinsa.product.domain.Product;
 import com.progm.allsinsa.product.domain.ProductOption;
-import com.progm.allsinsa.product.domain.ProductOptionRepository;
-import com.progm.allsinsa.product.domain.ProductRepository;
 import com.progm.allsinsa.product.dto.ProductOptionNameRequest;
 import com.progm.allsinsa.product.dto.ProductOptionRequest;
 import com.progm.allsinsa.product.dto.ProductOptionResponse;
+import com.progm.allsinsa.product.repository.ProductOptionRepository;
+import com.progm.allsinsa.product.repository.ProductRepository;
 import javassist.NotFoundException;
 
 @Transactional

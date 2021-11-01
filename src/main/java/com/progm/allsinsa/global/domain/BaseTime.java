@@ -1,4 +1,4 @@
-package com.progm.allsinsa.product.domain;
+package com.progm.allsinsa.global.domain;
 
 import java.time.LocalDateTime;
 
