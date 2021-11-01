@@ -61,4 +61,7 @@ public class ProductOption extends BaseTime {
         return stock;
     }
 
+    public int addStock(int additionalStock) {
+        return stock += additionalStock;
+    }
 }

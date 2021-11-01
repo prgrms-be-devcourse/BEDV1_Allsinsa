@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.progm.allsinsa.product.dto.ProductOptionNameRequest;
 import com.progm.allsinsa.product.dto.ProductOptionRequest;
 import com.progm.allsinsa.product.dto.ProductOptionResponse;
+import com.progm.allsinsa.product.dto.ProductOptionStockRequest;
 import com.progm.allsinsa.product.service.ProductOptionService;
 
 @RequestMapping("/api/v1/products/{productId}/productOptions")
@@ -31,7 +33,7 @@ public class ProductOptionController {
 
     @PostMapping
     public ResponseEntity<ProductOptionResponse> createProductOption(@PathVariable Long productId,
-            @Valid ProductOptionRequest productOptionRequest) {
+            @RequestBody @Valid ProductOptionRequest productOptionRequest) {
         ProductOptionResponse response = productOptionService.create(productId, productOptionRequest);
 
         return ResponseEntity.created(
@@ -50,12 +52,20 @@ public class ProductOptionController {
             @PathVariable Long productId,
             @PathVariable Long productOptionId,
             @PathVariable int optionNumber,
-            @Valid ProductOptionNameRequest optionNameRequest) {
+            @RequestBody @Valid ProductOptionNameRequest optionNameRequest) {
 
         ProductOptionResponse response = productOptionService.updateOptionName(productOptionId, optionNumber,
                 optionNameRequest);
 
         return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{productOptionId}")
+    public ResponseEntity<Integer> addStock(
+            @PathVariable Long productOptionId,
+            @RequestBody @Valid ProductOptionStockRequest request) {
+        int stock = productOptionService.addStock(productOptionId, request.getAdditionalStock());
+        return ResponseEntity.ok(stock);
     }
 
     @DeleteMapping("/{productOptionId}")

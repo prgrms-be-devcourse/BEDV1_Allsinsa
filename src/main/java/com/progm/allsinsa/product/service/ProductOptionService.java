@@ -35,6 +35,7 @@ public class ProductOptionService {
         return ProductOptionResponse.from(saved);
     }
 
+    // Cart에서 사용
     @Transactional(readOnly = true)
     public ProductOptionResponse findById(Long productOptionId) {
         ProductOption productOption = getProductOption(productOptionId);
@@ -65,9 +66,15 @@ public class ProductOptionService {
         return ProductOptionResponse.from(productOption);
     }
 
+    // Order에서 사용
     public int purchase(Long productOptionId, int purchasedNum) {
         ProductOption productOption = getProductOption(productOptionId);
         return productOption.purchaseProductOption(purchasedNum);
+    }
+
+    public int addStock(Long productOptionId, int additionalStock) {
+        ProductOption productOption = getProductOption(productOptionId);
+        return productOption.addStock(additionalStock);
     }
 
     public void delete(Long productOptionId) {
