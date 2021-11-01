@@ -78,7 +78,7 @@ public class Order {
     }
 
     private String createOrderNumber() {
-        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + UUID.randomUUID();
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))+ "-" + UUID.randomUUID();
     }
 
     public void addOrderProduct(OrderProduct orderProduct) {
