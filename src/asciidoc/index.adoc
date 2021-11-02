@@ -1,0 +1,51 @@
+:hardbreaks:
+ifndef::snippets[]
+:snippets: ../../../target/generated-snippets
+endif::[]
+
+== 주문
+
+=== 주문 생성
+
+.Path
+==== /api/v1/orders
+
+.Request
+include::{snippets}/order-create/http-request.adoc[]
+include::{snippets}/order-create/request-fields.adoc[]
+
+.Response
+include::{snippets}/order-create/http-response.adoc[]
+include::{snippets}/order-create/response-fields.adoc[]
+
+=== 주문 조회 (전부)
+==== /api/v1/orders
+
+.Request
+include::{snippets}/order-read-all/http-request.adoc[]
+
+.Response
+include::{snippets}/order-read-all/http-response.adoc[]
+include::{snippets}/order-read-all/response-fields-beneath-content.adoc[]
+
+=== 주문 조회 (멤버별)
+==== /api/v1/orders?memberId=id
+
+.Request
+include::{snippets}/order-read-member/http-request.adoc[]
+
+.Response
+include::{snippets}/order-read-member/http-response.adoc[]
+include::{snippets}/order-read-member/response-fields-beneath-content.adoc[]
+
+=== 주문 조회 (주문번호 단건)
+==== /api/v1/orders/{number}
+
+.Request
+include::{snippets}/order-read-number/http-request.adoc[]
+include::{snippets}/order-read-number/path-parameters.adoc[]
+
+
+.Response
+include::{snippets}/order-read-number/http-response.adoc[]
+include::{snippets}/order-read-number/response-fields.adoc[]
