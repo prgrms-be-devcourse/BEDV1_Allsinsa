@@ -1,18 +1,19 @@
 package com.progm.allsinsa.order;
 
-import com.progm.allsinsa.order.domain.Order;
-import com.progm.allsinsa.order.domain.OrderProduct;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.Matchers.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.progm.allsinsa.order.domain.Order;
+import com.progm.allsinsa.order.domain.OrderProduct;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SpringBootTest

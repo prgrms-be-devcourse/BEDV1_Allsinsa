@@ -1,6 +1,5 @@
 package com.progm.allsinsa.order.controller;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.progm.allsinsa.order.dto.CreateOrderRequestDto;
 import com.progm.allsinsa.order.dto.OrderDto;
 import com.progm.allsinsa.order.service.OrderService;
@@ -35,7 +34,8 @@ public class OrderController {
     }
 
     @GetMapping(params = {"memberId"})
-    public ResponseEntity<Page<OrderDto>> getMemberOrder(@RequestParam(value = "memberId") Long memberId, Pageable pageable) {
+    public ResponseEntity<Page<OrderDto>> getMemberOrder(@RequestParam(value = "memberId") Long memberId,
+            Pageable pageable) {
         Page<OrderDto> memberOrderDto = orderService.getMemberOrder(pageable, memberId);
         return ResponseEntity.ok(memberOrderDto);
     }

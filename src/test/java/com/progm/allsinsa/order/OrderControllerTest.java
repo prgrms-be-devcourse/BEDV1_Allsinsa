@@ -104,8 +104,10 @@ public class OrderControllerTest {
                 2L
         );
 
-        CreateOrderRequestDto dto1 = new CreateOrderRequestDto(createOrderDto1, List.of(createOrderProductDto1, createOrderProductDto2));
-        CreateOrderRequestDto dto2 = new CreateOrderRequestDto(createOrderDto2, List.of(createOrderProductDto3, createOrderProductDto4));
+        CreateOrderRequestDto dto1 = new CreateOrderRequestDto(createOrderDto1,
+                List.of(createOrderProductDto1, createOrderProductDto2));
+        CreateOrderRequestDto dto2 = new CreateOrderRequestDto(createOrderDto2,
+                List.of(createOrderProductDto3, createOrderProductDto4));
 
         orderNumber1 = orderService.createOrder(dto1);
         orderNumber2 = orderService.createOrder(dto2);
