@@ -1,9 +1,12 @@
 package com.progm.allsinsa.order;
 
-import com.progm.allsinsa.order.domain.Order;
-import com.progm.allsinsa.order.domain.OrderProduct;
-import com.progm.allsinsa.order.repository.OrderRepository;
-import lombok.extern.slf4j.Slf4j;
+import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.Matchers.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,17 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-
+import com.progm.allsinsa.order.domain.Order;
+import com.progm.allsinsa.order.domain.OrderProduct;
+import com.progm.allsinsa.order.repository.OrderRepository;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @EnableJpaAuditing

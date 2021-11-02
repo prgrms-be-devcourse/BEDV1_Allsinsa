@@ -1,20 +1,20 @@
 package com.progm.allsinsa.product.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import com.progm.allsinsa.global.domain.BaseTime;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@EntityListeners(AuditingEntityListener.class)
-public class Product {
+public class Product extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -37,18 +37,11 @@ public class Product {
     @Column(name = "thumbnail_img_path", length = 500)
     private String thumbnailImgPath;
 
-    @CreatedDate
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
     @Column(name = "seller_id")
     private long sellerId;
 
-    public Product(String name, int price, String category, String status, String productDetailImgPath, String thumbnailImgPath, long sellerId) {
+    public Product(String name, int price, String category, String status, String productDetailImgPath,
+            String thumbnailImgPath, long sellerId) {
         this.name = name;
         this.price = price;
         this.category = category;
@@ -56,5 +49,9 @@ public class Product {
         this.productDetailImgPath = productDetailImgPath;
         this.thumbnailImgPath = thumbnailImgPath;
         this.sellerId = sellerId;
+    }
+
+    public Product(String name) {
+        this.name = name;
     }
 }

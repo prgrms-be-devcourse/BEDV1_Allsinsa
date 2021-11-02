@@ -1,5 +1,21 @@
 package com.progm.allsinsa.product;
 
+import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Optional;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
 import com.progm.allsinsa.product.domain.Product;
 import com.progm.allsinsa.product.dto.ProductDto;
 import com.progm.allsinsa.product.dto.ProductRequestDto;
@@ -7,16 +23,7 @@ import com.progm.allsinsa.product.repository.ProductRepository;
 import com.progm.allsinsa.product.service.ProductService;
 import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import java.util.Optional;
 
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -47,8 +54,8 @@ class ProductServiceTest {
         // THEN
         Optional<Product> productFind = productRepository.findById(saveId);
         assertAll(
-                () ->  assertThat(productFind.isPresent(),is(true)),
-                ()->   assertThat(productFind.get().getName(),is(requestDto.getName()))
+                () -> assertThat(productFind.isPresent(), is(true)),
+                () -> assertThat(productFind.get().getName(), is(requestDto.getName()))
         );
 
     }
@@ -74,11 +81,10 @@ class ProductServiceTest {
 
         // THEN
         assertAll(
-                () ->  assertThat(foundProductDto.getName(),is(requestDto.getName())),
-                ()->   assertThat(foundProductDto.getPrice(),is(requestDto.getPrice()))
+                () -> assertThat(foundProductDto.getName(), is(requestDto.getName())),
+                () -> assertThat(foundProductDto.getPrice(), is(requestDto.getPrice()))
         );
     }
-
 
     @Test
     @Order(3)
@@ -91,7 +97,7 @@ class ProductServiceTest {
         Page<ProductDto> productDtos = productService.findAll(page);
 
         // THEN
-        assertThat(productDtos.getSize(),is(greaterThan(0)));
+        assertThat(productDtos.getSize(), is(greaterThan(0)));
 
     }
 
@@ -110,11 +116,8 @@ class ProductServiceTest {
         // THEN
         log.info("size: {}", allByCategory.getTotalElements());
         log.info("allByCategory(ProductDto): {}", firstPageResult);
-        assertThat(firstPageResult.getCategory(),is(categoryName));
+        assertThat(firstPageResult.getCategory(), is(categoryName));
 
     }
-    
-
-
 
 }

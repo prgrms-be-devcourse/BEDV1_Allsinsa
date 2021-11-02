@@ -1,9 +1,14 @@
 package com.progm.allsinsa.product;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.progm.allsinsa.product.dto.ProductRequestDto;
-import com.progm.allsinsa.product.service.ProductService;
-import org.junit.jupiter.api.*;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -11,10 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.progm.allsinsa.product.dto.ProductRequestDto;
+import com.progm.allsinsa.product.service.ProductService;
 
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
@@ -22,12 +26,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class productControllerTest {
     @Autowired
-    private MockMvc mockMvc;
-    @Autowired
     ObjectMapper objectMapper;
-
     @Autowired
     ProductService productService;
+    @Autowired
+    private MockMvc mockMvc;
 
     @Test
     @DisplayName("새 상품 추가 api")
@@ -46,12 +49,13 @@ class productControllerTest {
 
         // WHEN - THEN
         mockMvc.perform(post("/api/v1/products")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(requestDto)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(requestDto)))
                 .andExpect(status().isCreated())
                 .andDo(print());
 
     }
+
     @Test
     @DisplayName("상품 단건조회 api")
     @Order(2)
@@ -69,8 +73,8 @@ class productControllerTest {
         long savedId = productService.save(requestDto);
 
         // WHEN - THEN
-        mockMvc.perform(get("/api/v1/products/{id}",savedId)
-                .contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/api/v1/products/{id}", savedId)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
@@ -93,8 +97,8 @@ class productControllerTest {
 
         // WHEN - THEN
         mockMvc.perform(get("/api/v1/products/")
-                        .param("page",String.valueOf(0))
-                        .param("size",String.valueOf(10))
+                        .param("page", String.valueOf(0))
+                        .param("size", String.valueOf(10))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
@@ -109,13 +113,12 @@ class productControllerTest {
 
         // WHEN - THEN
         mockMvc.perform(get("/api/v1/products/category")
-                        .param("category",category)
-                        .param("page",String.valueOf(0))
-                        .param("size",String.valueOf(10))
+                        .param("category", category)
+                        .param("page", String.valueOf(0))
+                        .param("size", String.valueOf(10))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
-
 
 }

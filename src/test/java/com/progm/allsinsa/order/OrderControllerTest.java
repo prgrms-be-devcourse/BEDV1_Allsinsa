@@ -1,11 +1,11 @@
 package com.progm.allsinsa.order;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.progm.allsinsa.order.dto.CreateOrderDto;
-import com.progm.allsinsa.order.dto.CreateOrderProductDto;
-import com.progm.allsinsa.order.dto.CreateOrderRequestDto;
-import com.progm.allsinsa.order.service.OrderService;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +15,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.List;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.progm.allsinsa.order.dto.CreateOrderDto;
+import com.progm.allsinsa.order.dto.CreateOrderProductDto;
+import com.progm.allsinsa.order.dto.CreateOrderRequestDto;
+import com.progm.allsinsa.order.service.OrderService;
 
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
@@ -97,8 +96,10 @@ public class OrderControllerTest {
                 2L
         );
 
-        CreateOrderRequestDto dto1 = new CreateOrderRequestDto(createOrderDto1, List.of(createOrderProductDto1, createOrderProductDto2));
-        CreateOrderRequestDto dto2 = new CreateOrderRequestDto(createOrderDto2, List.of(createOrderProductDto3, createOrderProductDto4));
+        CreateOrderRequestDto dto1 = new CreateOrderRequestDto(createOrderDto1,
+                List.of(createOrderProductDto1, createOrderProductDto2));
+        CreateOrderRequestDto dto2 = new CreateOrderRequestDto(createOrderDto2,
+                List.of(createOrderProductDto3, createOrderProductDto4));
 
         orderNumber1 = orderService.createOrder(dto1);
         orderNumber2 = orderService.createOrder(dto2);
