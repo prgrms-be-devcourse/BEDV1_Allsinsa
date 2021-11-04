@@ -8,6 +8,7 @@ import javax.persistence.Id;
 
 import com.progm.allsinsa.global.domain.BaseTime;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -40,6 +41,7 @@ public class Product extends BaseTime {
     @Column(name = "seller_id")
     private long sellerId;
 
+    @Builder
     public Product(String name, int price, String category, String status, String productDetailImgPath,
             String thumbnailImgPath, long sellerId) {
         this.name = name;
