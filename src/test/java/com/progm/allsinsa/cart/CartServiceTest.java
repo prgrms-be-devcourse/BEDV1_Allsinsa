@@ -2,8 +2,25 @@ package com.progm.allsinsa.cart;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.progm.allsinsa.cart.domain.Cart;
+import com.progm.allsinsa.cart.dto.CartConverter;
+import com.progm.allsinsa.cart.dto.CartDto;
+import com.progm.allsinsa.cart.dto.CartProductDto;
+import com.progm.allsinsa.cart.repository.CartRepository;
+import com.progm.allsinsa.cart.service.CartProductService;
+import com.progm.allsinsa.cart.service.CartService;
+import com.progm.allsinsa.member.domain.Member;
+import com.progm.allsinsa.member.dto.MemberConverter;
+import com.progm.allsinsa.member.dto.MemberDto;
+import com.progm.allsinsa.member.repository.MemberRepository;
+import com.progm.allsinsa.member.service.MemberService;
+import com.progm.allsinsa.product.dto.ProductOptionRequest;
+import com.progm.allsinsa.product.dto.ProductOptionResponse;
+import com.progm.allsinsa.product.dto.ProductRequestDto;
+import com.progm.allsinsa.product.service.ProductOptionService;
+import com.progm.allsinsa.product.service.ProductService;
 import java.util.Optional;
-
+import javassist.NotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Nested;
@@ -15,15 +32,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.EmptyResultDataAccessException;
-
-import com.progm.allsinsa.cart.domain.Cart;
-import com.progm.allsinsa.cart.dto.CartConverter;
-import com.progm.allsinsa.cart.dto.CartDto;
-import com.progm.allsinsa.cart.dto.CartProductDto;
-import com.progm.allsinsa.cart.repository.CartRepository;
-import com.progm.allsinsa.cart.service.CartProductService;
-import com.progm.allsinsa.cart.service.CartService;
-import javassist.NotFoundException;
 
 @DisplayName("CartServiceTest")
 @SpringBootTest
@@ -42,29 +50,49 @@ class CartServiceTest {
     @Autowired
     CartConverter cartConverter;
 
+    @Autowired
+    MemberRepository memberRepository;
+
+    @Autowired
+    MemberConverter memberConverter;
+
+    @Autowired
+    MemberService memberService;
+
+    @Autowired
+    ProductService productService;
+
+    @Autowired
+    ProductOptionService productOptionService;
+
     Logger log = LoggerFactory.getLogger(CartServiceTest.class);
 
     @Test
     void wrongDeleteCart() {
-        assertThrows(EmptyResultDataAccessException.class, () -> cartRepository.deleteById(150L));
+        assertThrows(EmptyResultDataAccessException.class, ()->cartRepository.deleteById(150L));
     }
 
     @Nested
     @DisplayName("장바구니 테스트")
     @TestMethodOrder(OrderAnnotation.class)
     class CartTest {
-        private final Long memberId = 100L;
 
         @Test
         @Order(1)
         @DisplayName("맴버 생성시 장바구니 생성을 위한 테스트")
-        void createCart() {
-            Long cartId = cartService.createCart(memberId);
-            Optional<Cart> byId = cartRepository.findById(cartId);
+        void createCart() throws NotFoundException {
+            MemberDto createdMemberDto = MemberDto.builder()
+                .name("A")
+                .email("1234@abc.com")
+                .password("123abcDEF")
+                .build();
+            MemberDto memberDto = memberService.createMember(createdMemberDto);
+            CartDto cartDto = cartService.findCartByMemberId(memberDto.getId());
+            Optional<Cart> byId = cartRepository.findById(cartDto.getId());
             assertNotNull(byId);
             Cart cart = byId.get();
-            assertEquals(cartId, cart.getId());
-            assertEquals(memberId, cart.getMember());
+            assertEquals(cartDto.getId(), cart.getId());
+            assertEquals(memberDto.getId(), memberConverter.convertMemberDto(cart.getMember()).getId());
             log.info("장바구니 생성 성공");
         }
 
@@ -72,7 +100,9 @@ class CartServiceTest {
         @Order(2)
         @DisplayName("맴버 삭제시 장바구니 삭제를 위한 테스트")
         void deleteCart() {
-            Cart cart = cartRepository.findCartByMember(memberId).get();
+            Member member = memberRepository.findByName("A").get();
+            Long memberId = member.getId();
+            Cart cart = cartRepository.findCartByMemberId(member.getId()).get();
             assertDoesNotThrow(() -> cartService.deleteCart(cart.getId()));
 
             assertThrows(NotFoundException.class, () -> cartService.findCartByMemberId(memberId));
@@ -84,39 +114,61 @@ class CartServiceTest {
     @DisplayName("장바구니 제품 테스트")
     @TestMethodOrder(OrderAnnotation.class)
     class CartProductTest {
-        Long memberId = 200L;
-        Long productOptionDto = 1L;
 
-        private Long createCart(Long memberId) {
-            Long cartId = cartService.createCart(memberId);
-            log.info("create cart success - cartId : " + cartId.toString());
-            return cartId;
+        private CartDto createCart() throws NotFoundException {
+            MemberDto createdMemberDto = MemberDto.builder()
+                .name("B")
+                .email("2234@abc.com")
+                .password("123abcDEF")
+                .build();
+            MemberDto memberDto = memberService.createMember(createdMemberDto);
+            CartDto cartDto = cartService.findCartByMemberId(memberDto.getId());
+            log.info("create cart success - cartId : "+cartDto.toString());
+            return cartDto;
         }
 
         @Test
         @Order(1)
         @DisplayName("장바구니에 제품 추가")
         void saveCartProduct() throws NotFoundException {
-            CartProductDto cartProductDto = new CartProductDto(null, 0, productOptionDto);
-            Long cartId = createCart(memberId);
+            // create Member & Cart
+            CartDto cartDto = createCart();
+            Long cartId = cartDto.getId();
 
-            CartDto cartDto = cartService.findCartById(cartId);
+            // create product
+            ProductRequestDto productRequestDto = ProductRequestDto.builder()
+                .name("productA")
+                .build();
+            long productId = productService.save(productRequestDto);
 
-            CartProductDto cPDto = cartProductService.saveCartProduct(cartDto.getId(),
-                    cartProductDto);
+            // create product option
+            ProductOptionRequest productOptionRequest = ProductOptionRequest.builder()
+                .stock(20)
+                .option1("L")
+                .build();
+            ProductOptionResponse productOptionResponse = productOptionService.create(productId,
+                productOptionRequest);
 
-            Long resultCartProductId = cPDto.getId();
+            // save to cart
+            CartProductDto draftDto = CartProductDto.builder()
+                .count(2)
+                .productOptionDto(productOptionResponse)
+                .build();
+            CartProductDto CartProductDto = cartProductService.saveCartProduct(cartId,
+                draftDto);
 
-            log.info("cartProductId : " + resultCartProductId.toString()); // TODO : 2...?
+            Long cartProductId = CartProductDto.getId();
+
+            log.info("cartProductId : "+cartProductId.toString());
 
             cartDto = cartService.findCartById(cartId);
 
             Optional<CartProductDto> resultCartProductDto = cartDto.getCartProductDtos()
-                    .stream().filter(t -> t.getId().equals(resultCartProductId))
-                    .findAny();
+                .stream().filter(t -> t.getId().equals(cartProductId))
+                .findAny();
 
             assertNotNull(resultCartProductDto);
-            assertEquals(resultCartProductId, resultCartProductDto.get().getId());
+            assertEquals(cartProductId, resultCartProductDto.get().getId());
         }
 
         @Test
@@ -124,15 +176,16 @@ class CartServiceTest {
         @DisplayName("장바구니의 제품 수정")
         void updateCartProduct() throws NotFoundException {
             int fixedCount = 100;
+            Member member = memberRepository.findByName("B").get();
+            Long memberId = member.getId();
             CartDto cartDto = cartService.findCartByMemberId(memberId);
             CartProductDto cartProductDto = cartDto.getCartProductDtos().get(0);
 
-            CartProductDto newCartProductDto = new CartProductDto(cartProductDto.getId(), fixedCount,
-                    cartProductDto.getProductOptionDto());
+            CartProductDto newCartProductDto = new CartProductDto(cartProductDto.getId(), fixedCount, cartProductDto.getProductOptionDto());
 
             CartProductDto resultCartProductDto = cartProductService.updateCartProduct(newCartProductDto);
             CartProductDto cartProductById = cartProductService.findCartProductById(
-                    resultCartProductDto.getId());
+                resultCartProductDto.getId());
 
             assertNotNull(cartProductById);
             assertEquals(fixedCount, cartProductById.getCount());
@@ -142,6 +195,8 @@ class CartServiceTest {
         @Order(3)
         @DisplayName("장바구니의 제품 삭제")
         void deleteCartProduct() throws NotFoundException {
+            Member member = memberRepository.findByName("B").get();
+            Long memberId = member.getId();
             CartDto cartDto = cartService.findCartByMemberId(memberId);
             CartProductDto cartProductDto = cartDto.getCartProductDtos().get(0);
 
