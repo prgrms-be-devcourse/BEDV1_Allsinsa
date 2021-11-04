@@ -1,5 +1,6 @@
 package com.progm.allsinsa.cart.dto;
 
+import com.progm.allsinsa.product.dto.ProductOptionResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,6 +12,5 @@ public class CartProductDto {
     private Long id;
     private int count;
 
-    // TODO : productOptionDto
-    private Long productOptionDto;
+    private ProductOptionResponse productOptionDto;
 }
