@@ -24,7 +24,7 @@ import com.progm.allsinsa.product.domain.ProductOption;
 import com.progm.allsinsa.product.dto.ProductOptionNameRequest;
 import com.progm.allsinsa.product.dto.ProductOptionRequest;
 import com.progm.allsinsa.product.dto.ProductOptionResponse;
-import com.progm.allsinsa.product.dto.ProductOptionStockRequest;
+import com.progm.allsinsa.product.dto.ProductOptionStockDto;
 import com.progm.allsinsa.product.repository.ProductOptionRepository;
 import com.progm.allsinsa.product.repository.ProductRepository;
 
@@ -151,8 +151,8 @@ public class ProductOptionTest {
         ProductOption saved = saveProductOption(stock, "블랙");
 
         int additionalStock = 15;
-        ProductOptionStockRequest request = new ProductOptionStockRequest(additionalStock);
-        HttpEntity<ProductOptionStockRequest> requestEntity = new HttpEntity<>(request);
+        ProductOptionStockDto request = new ProductOptionStockDto(additionalStock);
+        HttpEntity<ProductOptionStockDto> requestEntity = new HttpEntity<>(request);
 
         // when
         ResponseEntity<Integer> response = restTemplate.exchange(
