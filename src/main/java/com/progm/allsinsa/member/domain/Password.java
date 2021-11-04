@@ -8,7 +8,7 @@ public class Password {
     private final String password;
 
     public Password(String password) {
-        if(!isValidPassword(password))
+        if (!isValidPassword(password))
             throw new IllegalArgumentException("올바르지 않은 Password 형식입니다.");
         this.password = password;
     }
@@ -20,7 +20,7 @@ public class Password {
         String regex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$";
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(password);
-        if(m.matches()) {
+        if (m.matches()) {
             err = true;
         }
         return err;

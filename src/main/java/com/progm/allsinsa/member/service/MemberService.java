@@ -1,5 +1,8 @@
 package com.progm.allsinsa.member.service;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.progm.allsinsa.cart.dto.CartDto;
 import com.progm.allsinsa.cart.service.CartService;
 import com.progm.allsinsa.member.domain.Email;
@@ -10,8 +13,6 @@ import com.progm.allsinsa.member.dto.MemberDto;
 import com.progm.allsinsa.member.repository.MemberRepository;
 import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -21,7 +22,7 @@ public class MemberService {
     private final CartService cartService;
 
     public MemberService(MemberRepository memberRepository,
-        MemberConverter memberConverter, CartService cartService) {
+            MemberConverter memberConverter, CartService cartService) {
         this.memberRepository = memberRepository;
         this.memberConverter = memberConverter;
         this.cartService = cartService;
@@ -49,7 +50,7 @@ public class MemberService {
     @Transactional(readOnly = true)
     public MemberDto findById(Long memberId) throws NotFoundException {
         Member member = memberRepository.findById(memberId)
-            .orElseThrow(() -> new NotFoundException("Member id로 회원을 검색할 수 없습니다."));
+                .orElseThrow(() -> new NotFoundException("Member id로 회원을 검색할 수 없습니다."));
         return memberConverter.convertMemberDto(member);
     }
 
@@ -57,14 +58,14 @@ public class MemberService {
     public MemberDto findByEmail(String email) throws NotFoundException {
         Email inputEmail = new Email(email); // validate check
         Member member = memberRepository.findByEmail(inputEmail.getEmail())
-            .orElseThrow(() -> new NotFoundException("Member email로 회원을 검색할 수 없습니다."));
+                .orElseThrow(() -> new NotFoundException("Member email로 회원을 검색할 수 없습니다."));
         return memberConverter.convertMemberDto(member);
     }
 
     @Transactional
     public MemberDto updateMember(MemberDto memberDto) throws NotFoundException {
         Member member = memberRepository.findById(memberDto.getId())
-            .orElseThrow(() -> new NotFoundException("Member id로 회원을 검색할 수 없습니다. 회원정보를 수정할 수 없습니다."));
+                .orElseThrow(() -> new NotFoundException("Member id로 회원을 검색할 수 없습니다. 회원정보를 수정할 수 없습니다."));
 
         member.updateMember(memberDto.getName(), memberDto.getPassword());
         return memberConverter.convertMemberDto(member);
@@ -76,8 +77,8 @@ public class MemberService {
         Email inputEmail = new Email(memberDto.getEmail()); // validate check
 
         Member member = memberRepository.findByEmail(inputEmail.getEmail())
-            .orElseThrow(
-                () -> new NotFoundException("Member email로 회원을 검색할 수 없습니다. 로그인을 할 수 없습니다."));
+                .orElseThrow(
+                        () -> new NotFoundException("Member email로 회원을 검색할 수 없습니다. 로그인을 할 수 없습니다."));
 
         Password inputPassword = new Password(memberDto.getPassword()); //validate check
 

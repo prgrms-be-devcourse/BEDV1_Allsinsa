@@ -1,7 +1,7 @@
 package com.progm.allsinsa.cart.domain;
 
-import com.progm.allsinsa.product.domain.ProductOption;
 import java.util.Objects;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.progm.allsinsa.product.domain.ProductOption;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,7 +30,7 @@ public class CartProduct {
     @Column(name = "id")
     private Long id;
 
-    @Column(name="count", nullable = false)
+    @Column(name = "count", nullable = false)
     private int count;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -36,7 +38,7 @@ public class CartProduct {
     private Cart cart;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name="product_option_id", referencedColumnName = "id")
+    @JoinColumn(name = "product_option_id", referencedColumnName = "id")
     private ProductOption productOption;
 
     public CartProduct(int count, ProductOption productOption) {
@@ -45,7 +47,7 @@ public class CartProduct {
     }
 
     public void setCart(Cart cart) {
-        if(Objects.nonNull(this.cart)) {
+        if (Objects.nonNull(this.cart)) {
             this.cart.getCartProducts().remove(this);
         }
 

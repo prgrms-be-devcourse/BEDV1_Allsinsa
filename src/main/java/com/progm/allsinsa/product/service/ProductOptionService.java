@@ -10,6 +10,7 @@ import com.progm.allsinsa.product.domain.ProductOption;
 import com.progm.allsinsa.product.dto.ProductOptionNameRequest;
 import com.progm.allsinsa.product.dto.ProductOptionRequest;
 import com.progm.allsinsa.product.dto.ProductOptionResponse;
+import com.progm.allsinsa.product.dto.ProductOptionStockDto;
 import com.progm.allsinsa.product.repository.ProductOptionRepository;
 import com.progm.allsinsa.product.repository.ProductRepository;
 import javassist.NotFoundException;
@@ -70,9 +71,9 @@ public class ProductOptionService {
         return productOption.purchaseProductOption(purchasedNum);
     }
 
-    public int addStock(Long productOptionId, int additionalStock) throws NotFoundException {
+    public ProductOptionStockDto addStock(Long productOptionId, int additionalStock) throws NotFoundException {
         ProductOption productOption = getProductOption(productOptionId);
-        return productOption.addStock(additionalStock);
+        return ProductOptionStockDto.from(productOption.addStock(additionalStock));
     }
 
     public void delete(Long productOptionId) {

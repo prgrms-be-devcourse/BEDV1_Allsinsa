@@ -2,12 +2,8 @@ package com.progm.allsinsa.member.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.progm.allsinsa.member.domain.Member;
-import com.progm.allsinsa.member.dto.MemberConverter;
-import com.progm.allsinsa.member.dto.MemberDto;
-import com.progm.allsinsa.member.repository.MemberRepository;
 import java.util.Optional;
-import javassist.NotFoundException;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -17,6 +13,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import com.progm.allsinsa.member.domain.Member;
+import com.progm.allsinsa.member.dto.MemberConverter;
+import com.progm.allsinsa.member.dto.MemberDto;
+import com.progm.allsinsa.member.repository.MemberRepository;
+import javassist.NotFoundException;
 
 @DisplayName("MemberServiceTest")
 @SpringBootTest
@@ -43,10 +45,10 @@ class MemberServiceTest {
     @DisplayName("맴버 생성 테스트")
     void createMemberTest() throws NotFoundException {
         MemberDto createdMemberDto = MemberDto.builder()
-            .name(memberName)
-            .email(memberEmail)
-            .password(memberPassword)
-            .build();
+                .name(memberName)
+                .email(memberEmail)
+                .password(memberPassword)
+                .build();
         MemberDto memberDto = memberService.createMember(createdMemberDto);
 
         Optional<Member> byId = memberRepository.findById(memberDto.getId());
@@ -54,9 +56,9 @@ class MemberServiceTest {
         Member resultMember = byId.get();
 
         assertAll(
-            () -> assertEquals(memberDto.getId(), resultMember.getId()),
-            () -> assertEquals(memberEmail, resultMember.getEmail()),
-            () -> assertEquals(memberPassword, resultMember.getPassword())
+                () -> assertEquals(memberDto.getId(), resultMember.getId()),
+                () -> assertEquals(memberEmail, resultMember.getEmail()),
+                () -> assertEquals(memberPassword, resultMember.getPassword())
         );
     }
 
@@ -66,8 +68,8 @@ class MemberServiceTest {
         MemberDto memberDto = assertDoesNotThrow(() -> memberService.findByEmail(memberEmail));
 
         assertAll(
-            () -> assertEquals(memberEmail, memberDto.getEmail()),
-            () -> assertEquals(memberPassword, memberDto.getPassword())
+                () -> assertEquals(memberEmail, memberDto.getEmail()),
+                () -> assertEquals(memberPassword, memberDto.getPassword())
         );
     }
 
@@ -77,8 +79,8 @@ class MemberServiceTest {
         MemberDto dto = assertDoesNotThrow(() -> memberService.findByEmail(memberEmail));
         MemberDto memberDto = assertDoesNotThrow(() -> memberService.findById(dto.getId()));
         assertAll(
-            () -> assertEquals(memberEmail, memberDto.getEmail()),
-            () -> assertEquals(memberPassword, memberDto.getPassword())
+                () -> assertEquals(memberEmail, memberDto.getEmail()),
+                () -> assertEquals(memberPassword, memberDto.getPassword())
         );
     }
 
@@ -96,14 +98,14 @@ class MemberServiceTest {
         String fixedMemberPassword = "fixedPW123abcDEF!";
         MemberDto dto = assertDoesNotThrow(() -> memberService.findByEmail(memberEmail));
         MemberDto fixedMemberDto = new MemberDto(dto.getId(), dto.getEmail(), fixedMemberPassword,
-            fixedMemberName);
+                fixedMemberName);
         MemberDto resultMemberDto = assertDoesNotThrow(() -> memberService.updateMember(fixedMemberDto));
 
         assertAll(
-            () -> assertEquals(dto.getId(), resultMemberDto.getId()),
-            () -> assertEquals(memberEmail, resultMemberDto.getEmail()),
-            () -> assertEquals(fixedMemberPassword, resultMemberDto.getPassword()),
-            () -> assertEquals(fixedMemberName, resultMemberDto.getName())
+                () -> assertEquals(dto.getId(), resultMemberDto.getId()),
+                () -> assertEquals(memberEmail, resultMemberDto.getEmail()),
+                () -> assertEquals(fixedMemberPassword, resultMemberDto.getPassword()),
+                () -> assertEquals(fixedMemberName, resultMemberDto.getName())
         );
     }
 

@@ -2,6 +2,20 @@ package com.progm.allsinsa.cart;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Optional;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.EmptyResultDataAccessException;
+
 import com.progm.allsinsa.cart.domain.Cart;
 import com.progm.allsinsa.cart.dto.CartConverter;
 import com.progm.allsinsa.cart.dto.CartDto;
@@ -19,19 +33,7 @@ import com.progm.allsinsa.product.dto.ProductOptionResponse;
 import com.progm.allsinsa.product.dto.ProductRequestDto;
 import com.progm.allsinsa.product.service.ProductOptionService;
 import com.progm.allsinsa.product.service.ProductService;
-import java.util.Optional;
 import javassist.NotFoundException;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.EmptyResultDataAccessException;
 
 @DisplayName("CartServiceTest")
 @SpringBootTest
@@ -69,7 +71,7 @@ class CartServiceTest {
 
     @Test
     void wrongDeleteCart() {
-        assertThrows(EmptyResultDataAccessException.class, ()->cartRepository.deleteById(150L));
+        assertThrows(EmptyResultDataAccessException.class, () -> cartRepository.deleteById(150L));
     }
 
     @Nested
@@ -82,10 +84,10 @@ class CartServiceTest {
         @DisplayName("맴버 생성시 장바구니 생성을 위한 테스트")
         void createCart() throws NotFoundException {
             MemberDto createdMemberDto = MemberDto.builder()
-                .name("A")
-                .email("1234@abc.com")
-                .password("123abcDEF")
-                .build();
+                    .name("A")
+                    .email("1234@abc.com")
+                    .password("123abcDEF")
+                    .build();
             MemberDto memberDto = memberService.createMember(createdMemberDto);
             CartDto cartDto = cartService.findCartByMemberId(memberDto.getId());
             Optional<Cart> byId = cartRepository.findById(cartDto.getId());
@@ -117,13 +119,13 @@ class CartServiceTest {
 
         private CartDto createCart() throws NotFoundException {
             MemberDto createdMemberDto = MemberDto.builder()
-                .name("B")
-                .email("2234@abc.com")
-                .password("123abcDEF")
-                .build();
+                    .name("B")
+                    .email("2234@abc.com")
+                    .password("123abcDEF")
+                    .build();
             MemberDto memberDto = memberService.createMember(createdMemberDto);
             CartDto cartDto = cartService.findCartByMemberId(memberDto.getId());
-            log.info("create cart success - cartId : "+cartDto.toString());
+            log.info("create cart success - cartId : " + cartDto.toString());
             return cartDto;
         }
 
@@ -137,35 +139,35 @@ class CartServiceTest {
 
             // create product
             ProductRequestDto productRequestDto = ProductRequestDto.builder()
-                .name("productA")
-                .build();
+                    .name("productA")
+                    .build();
             long productId = productService.save(productRequestDto);
 
             // create product option
             ProductOptionRequest productOptionRequest = ProductOptionRequest.builder()
-                .stock(20)
-                .option1("L")
-                .build();
+                    .stock(20)
+                    .option1("L")
+                    .build();
             ProductOptionResponse productOptionResponse = productOptionService.create(productId,
-                productOptionRequest);
+                    productOptionRequest);
 
             // save to cart
             CartProductDto draftDto = CartProductDto.builder()
-                .count(2)
-                .productOptionDto(productOptionResponse)
-                .build();
+                    .count(2)
+                    .productOptionDto(productOptionResponse)
+                    .build();
             CartProductDto CartProductDto = cartProductService.saveCartProduct(cartId,
-                draftDto);
+                    draftDto);
 
             Long cartProductId = CartProductDto.getId();
 
-            log.info("cartProductId : "+cartProductId.toString());
+            log.info("cartProductId : " + cartProductId.toString());
 
             cartDto = cartService.findCartById(cartId);
 
             Optional<CartProductDto> resultCartProductDto = cartDto.getCartProductDtos()
-                .stream().filter(t -> t.getId().equals(cartProductId))
-                .findAny();
+                    .stream().filter(t -> t.getId().equals(cartProductId))
+                    .findAny();
 
             assertNotNull(resultCartProductDto);
             assertEquals(cartProductId, resultCartProductDto.get().getId());
@@ -181,11 +183,12 @@ class CartServiceTest {
             CartDto cartDto = cartService.findCartByMemberId(memberId);
             CartProductDto cartProductDto = cartDto.getCartProductDtos().get(0);
 
-            CartProductDto newCartProductDto = new CartProductDto(cartProductDto.getId(), fixedCount, cartProductDto.getProductOptionDto());
+            CartProductDto newCartProductDto = new CartProductDto(cartProductDto.getId(), fixedCount,
+                    cartProductDto.getProductOptionDto());
 
             CartProductDto resultCartProductDto = cartProductService.updateCartProduct(newCartProductDto);
             CartProductDto cartProductById = cartProductService.findCartProductById(
-                resultCartProductDto.getId());
+                    resultCartProductDto.getId());
 
             assertNotNull(cartProductById);
             assertEquals(fixedCount, cartProductById.getCount());

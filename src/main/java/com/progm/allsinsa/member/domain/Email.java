@@ -8,8 +8,8 @@ public class Email {
     private final String email;
 
     public Email(String email) {
-        if(!isValidEmail(email))
-            throw new IllegalArgumentException("올바르지 않은 Email 형식입니다."+email);
+        if (!isValidEmail(email))
+            throw new IllegalArgumentException("올바르지 않은 Email 형식입니다." + email);
         this.email = email;
     }
 
@@ -20,7 +20,7 @@ public class Email {
         String regex = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(email);
-        if(m.matches()) {
+        if (m.matches()) {
             err = true;
         }
         return err;

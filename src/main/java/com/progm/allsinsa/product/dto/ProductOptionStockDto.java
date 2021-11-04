@@ -10,7 +10,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
-public class ProductOptionStockRequest {
+public class ProductOptionStockDto {
     @Positive
-    private int additionalStock;
+    private int stock;
+
+    public static ProductOptionStockDto from(int stock) {
+        return new ProductOptionStockDto(stock);
+    }
 }

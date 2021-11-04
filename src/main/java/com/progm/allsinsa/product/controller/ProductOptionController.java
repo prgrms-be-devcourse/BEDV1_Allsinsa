@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.progm.allsinsa.product.dto.ProductOptionNameRequest;
 import com.progm.allsinsa.product.dto.ProductOptionRequest;
 import com.progm.allsinsa.product.dto.ProductOptionResponse;
-import com.progm.allsinsa.product.dto.ProductOptionStockRequest;
+import com.progm.allsinsa.product.dto.ProductOptionStockDto;
 import com.progm.allsinsa.product.service.ProductOptionService;
 import javassist.NotFoundException;
 
@@ -61,11 +61,12 @@ public class ProductOptionController {
     }
 
     @PatchMapping("/{productOptionId}/stock")
-    public ResponseEntity<Integer> addStock(
+    public ResponseEntity<ProductOptionStockDto> addStock(
             @PathVariable Long productOptionId,
-            @RequestBody @Valid ProductOptionStockRequest request) throws NotFoundException {
-        int stock = productOptionService.addStock(productOptionId, request.getAdditionalStock());
-        return ResponseEntity.ok(stock);
+            @RequestBody @Valid ProductOptionStockDto request) throws NotFoundException {
+        ProductOptionStockDto response = productOptionService.addStock(productOptionId, request.getStock());
+        return ResponseEntity.ok()
+                .body(response);
     }
 
     @DeleteMapping("/{productOptionId}")

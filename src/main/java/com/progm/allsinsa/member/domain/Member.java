@@ -1,33 +1,35 @@
 package com.progm.allsinsa.member.domain;
 
-import com.progm.allsinsa.global.domain.BaseTime;
 import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.progm.allsinsa.global.domain.BaseTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name="member")
+@Table(name = "member")
 public class Member extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name="email", length = 50, unique = true, nullable = false)
+    @Column(name = "email", length = 50, unique = true, nullable = false)
     String email;
 
-    @Column(name="password", length = 50, nullable = false)
+    @Column(name = "password", length = 50, nullable = false)
     String password;
 
-    @Column(name="name", length = 20, nullable = false)
+    @Column(name = "name", length = 20, nullable = false)
     String name;
 
     public Member(String email, String password, String name) {

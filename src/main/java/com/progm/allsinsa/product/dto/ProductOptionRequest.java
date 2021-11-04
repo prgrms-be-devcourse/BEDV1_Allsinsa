@@ -7,7 +7,6 @@ import org.hibernate.validator.constraints.Length;
 
 import com.progm.allsinsa.product.domain.Product;
 import com.progm.allsinsa.product.domain.ProductOption;
-import com.sun.istack.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,6 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 public class ProductOptionRequest {
+
     @Positive
     private int stock;
 
