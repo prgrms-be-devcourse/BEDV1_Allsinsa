@@ -2,6 +2,7 @@ package com.progm.allsinsa.cart.dto;
 
 import java.util.List;
 
+import com.progm.allsinsa.member.dto.MemberDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +13,6 @@ import lombok.Getter;
 public class CartDto {
     private Long id;
 
-    // TODO : memberDto
-    private Long memberDto;
+    private MemberDto memberDto;
     private List<CartProductDto> cartProductDtos;
 }

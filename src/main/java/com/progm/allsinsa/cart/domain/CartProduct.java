@@ -2,6 +2,7 @@ package com.progm.allsinsa.cart.domain;
 
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.progm.allsinsa.product.domain.ProductOption;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,15 +37,11 @@ public class CartProduct {
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     private Cart cart;
 
-    // TODO : ProductOption
-    //    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    //    @JoinColumn(name="product_option_id", referencedColumnName = "id")
-    //    private ProductOption productOption;
-    @Column(name = "product_option_id", nullable = false)
-    private Long productOption;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_option_id", referencedColumnName = "id")
+    private ProductOption productOption;
 
-    // TODO : ProductOption
-    public CartProduct(int count, Long productOption) {
+    public CartProduct(int count, ProductOption productOption) {
         this.count = count;
         this.productOption = productOption;
     }
@@ -56,16 +54,6 @@ public class CartProduct {
         this.cart = cart;
         cart.getCartProducts().add(this);
     }
-
-    // TODO : ProductOption
-    /*
-    public void setProductOption(ProductOption productOption) {
-        if(Objects.nonNull(this.productOption)) {
-            this.productOption.getCartProducts().remove(this);
-        }
-
-        this.productOption = productOption;
-    }*/
 
     public void setCount(int count) {
         this.count = count;

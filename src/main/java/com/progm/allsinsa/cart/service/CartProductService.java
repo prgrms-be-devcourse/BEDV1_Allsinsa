@@ -13,6 +13,7 @@ import com.progm.allsinsa.cart.dto.CartDto;
 import com.progm.allsinsa.cart.dto.CartProductDto;
 import com.progm.allsinsa.cart.repository.CartProductRepository;
 import com.progm.allsinsa.cart.repository.CartRepository;
+import com.progm.allsinsa.product.repository.ProductOptionRepository;
 import javassist.NotFoundException;
 
 @Service
@@ -21,14 +22,17 @@ public class CartProductService {
     private final CartProductRepository cartProductRepository;
     private final CartConverter cartConverter;
     private final CartService cartService;
+    private final ProductOptionRepository productOptionRepository;
 
     public CartProductService(CartRepository cartRepository,
             CartProductRepository cartProductRepository,
-            CartConverter cartConverter, CartService cartService) {
+            CartConverter cartConverter, CartService cartService,
+            ProductOptionRepository productOptionRepository) {
         this.cartRepository = cartRepository;
         this.cartProductRepository = cartProductRepository;
         this.cartConverter = cartConverter;
         this.cartService = cartService;
+        this.productOptionRepository = productOptionRepository;
     }
 
     /* CartProduct */
@@ -38,7 +42,10 @@ public class CartProductService {
             throws NotFoundException {
         Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(() -> new NotFoundException("장바구니 ID를 이용하여 상품을 장바구니에 추가할 수 없습니다."));
-        CartProduct cartProduct = new CartProduct(cartProductDto.getCount(), cartProductDto.getProductOptionDto());
+        CartProduct cartProduct = new CartProduct(
+                cartProductDto.getCount(),
+                productOptionRepository.findById(cartProductDto.getProductOptionDto().getId())
+                        .orElseThrow(() -> new NotFoundException("제품 옵션을 ID를 이용하여 조회할 수 없습니다. 제품 ")));
         cartProduct.setCart(cart);
         CartProduct entity = cartProductRepository.save(cartProduct);
 
@@ -77,7 +84,13 @@ public class CartProductService {
         CartDto cartDto = cartService.findCartByMemberId(memberId);
         return cartProductRepository.findAllByCartId(cartDto.getId())
                 .stream()
-                .map(cartConverter::convertCartProductDto)
+                .map(host -> {
+                    try {
+                        return cartConverter.convertCartProductDto(host);
+                    } catch (NotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .collect(Collectors.toList());
     }
 }

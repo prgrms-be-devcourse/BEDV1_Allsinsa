@@ -1,6 +1,8 @@
 package com.progm.allsinsa.order.controller;
 
 import java.net.URI;
+import java.util.Collections;
+import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,9 +36,10 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createOrder(@RequestBody CreateOrderRequestDto createOrderRequestDto) {
+    public ResponseEntity<Map<String, String>> createOrder(@RequestBody CreateOrderRequestDto createOrderRequestDto) {
         String orderNumber = orderService.createOrder(createOrderRequestDto);
-        return ResponseEntity.created(URI.create("/api/v1/orders/" + orderNumber)).body(orderNumber);
+        return ResponseEntity.created(URI.create("/api/v1/orders/" + orderNumber))
+                .body(Collections.singletonMap("orderNumber", orderNumber));
     }
 
     @GetMapping(params = {"memberId"})

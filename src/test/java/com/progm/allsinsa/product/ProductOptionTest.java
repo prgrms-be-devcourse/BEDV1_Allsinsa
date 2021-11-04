@@ -155,17 +155,17 @@ public class ProductOptionTest {
         HttpEntity<ProductOptionStockDto> requestEntity = new HttpEntity<>(request);
 
         // when
-        ResponseEntity<Integer> response = restTemplate.exchange(
+        ResponseEntity<ProductOptionStockDto> response = restTemplate.exchange(
                 url + "/" + saved.getId() + "/stock",
                 HttpMethod.PATCH,
                 requestEntity,
-                Integer.class);
+                ProductOptionStockDto.class);
 
         // then
         assertAll(
                 () -> assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK),
                 () -> assertThat(response.getBody()).isNotNull(),
-                () -> assertThat(response.getBody()).isEqualTo(stock + additionalStock)
+                () -> assertThat(response.getBody().getStock()).isEqualTo(stock + additionalStock)
         );
     }
 

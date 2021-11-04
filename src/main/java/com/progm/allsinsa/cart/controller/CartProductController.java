@@ -1,5 +1,7 @@
 package com.progm.allsinsa.cart.controller;
 
+import java.net.URI;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,15 +31,16 @@ public class CartProductController {
             throws NotFoundException {
         CartProductDto dto = cartProductService.saveCartProduct(cartProductDto.getId(),
                 cartProductDto);
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.created(
+                URI.create("/api/v1/cart-product/" + dto.getId() + "/count/" + dto.getCount())
+        ).body(dto);
     }
 
     // delete cart product
     @DeleteMapping("/{cart_product_id}")
-    public ResponseEntity<Long> deleteCartProduct(@PathVariable("cart_product_id") Long cartProductId)
-            throws NotFoundException {
+    public ResponseEntity<Void> deleteCartProduct(@PathVariable("cart_product_id") Long cartProductId) {
         cartProductService.deleteCartProduct(cartProductId);
-        return ResponseEntity.ok(cartProductId);
+        return ResponseEntity.noContent().build();
     }
 
     // find one of cart product by cart product id
