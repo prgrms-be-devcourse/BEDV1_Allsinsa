@@ -19,9 +19,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 public class ProductOptionRequest {
-    @NotNull
-    private ProductSimpleDto productDto;
-
     @Positive
     private int stock;
 
