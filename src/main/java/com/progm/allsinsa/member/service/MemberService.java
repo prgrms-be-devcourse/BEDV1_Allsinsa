@@ -39,11 +39,11 @@ public class MemberService {
 
     @Transactional
     public void deleteMember(MemberDto memberDto) throws NotFoundException {
-        memberRepository.deleteById(memberDto.getId());
-
         // delete cart
         CartDto cart = cartService.findCartByMemberId(memberDto.getId());
         cartService.deleteCart(cart.getId());
+        // delete member
+        memberRepository.deleteById(memberDto.getId());
     }
 
     @Transactional(readOnly = true)
@@ -66,7 +66,7 @@ public class MemberService {
         Member member = memberRepository.findById(memberDto.getId())
             .orElseThrow(() -> new NotFoundException("Member id로 회원을 검색할 수 없습니다. 회원정보를 수정할 수 없습니다."));
 
-        member.updateMember(member.getName(), member.getPassword());
+        member.updateMember(memberDto.getName(), memberDto.getPassword());
         return memberConverter.convertMemberDto(member);
     }
 
