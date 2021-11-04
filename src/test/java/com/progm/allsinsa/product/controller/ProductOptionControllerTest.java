@@ -18,6 +18,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.progm.allsinsa.product.dto.ProductOptionNameRequest;
@@ -30,11 +32,13 @@ import com.progm.allsinsa.product.service.ProductOptionService;
 @WebMvcTest(ProductOptionController.class)
 class ProductOptionControllerTest {
 
-    @Autowired
     private MockMvc mockMvc;
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private ProductOptionController controller;
 
     @MockBean
     private ProductOptionService productOptionService;
@@ -46,6 +50,11 @@ class ProductOptionControllerTest {
 
     @BeforeEach
     void setUp() {
+        mockMvc = MockMvcBuilders.standaloneSetup(controller)   // test를 위한 MockMvc 객체 생성. Controller 1개만 주입.
+                .addFilters(new CharacterEncodingFilter("UTF-8", true)) // 필터 추가
+                .alwaysDo(print())
+                .build();
+
         productId = 1L;
         productDto = ProductSimpleDto.builder()
                 .id(productId)
@@ -70,19 +79,19 @@ class ProductOptionControllerTest {
     void createProductOption() throws Exception {
         // given
         ProductOptionRequest productOptionRequest = ProductOptionRequest.builder()
-                .productDto(productDto)
                 .stock(20)
                 .option1("흑청")
                 .option2("30")
                 .build();
         String requestBody = objectMapper.writeValueAsString(productOptionRequest);
 
-        given(productOptionService.create(anyLong(), any()))
+        given(productOptionService.create(anyLong(), any(ProductOptionRequest.class)))
                 .willReturn(productOptionResponse);
 
         // when
         ResultActions resultActions = mockMvc.perform(post("/api/v1/products/{productId}/productOptions", productId)
                         .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andDo(print());
 
@@ -91,7 +100,6 @@ class ProductOptionControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(header().string(
                         LOCATION, "/api/v1/products/" + productId + "/productOptions/" + productOptionResponse.getId()))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("id").value(productOptionId))
                 .andExpect(jsonPath("productDto").exists())
                 .andExpect(jsonPath("productDto.id").value(productId))
@@ -122,13 +130,12 @@ class ProductOptionControllerTest {
 
         // when
         ResultActions resultActions = mockMvc.perform(get("/api/v1/products/{productId}/productOptions", productId)
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON))
                 .andDo(print());
 
         // then
         resultActions
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$[0].id").value(productOptionId))
                 .andExpect(jsonPath("$[0].productDto").exists())
                 .andExpect(jsonPath("$[0].productDto.id").value(productId))
@@ -153,7 +160,7 @@ class ProductOptionControllerTest {
         ProductOptionNameRequest request = new ProductOptionNameRequest(newOptionName1, newOptionName2);
         String requestBody = objectMapper.writeValueAsString(request);
 
-        given(productOptionService.updateOptionName(anyLong(), any()))
+        given(productOptionService.updateOptionName(anyLong(), any(ProductOptionNameRequest.class)))
                 .willReturn(ProductOptionResponse.builder()
                         .id(productOptionId)
                         .productDto(productDto)
@@ -167,13 +174,13 @@ class ProductOptionControllerTest {
                         patch("/api/v1/products/{productId}/productOptions/{productOptionId}/optionName", productId,
                                 productOptionId)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(requestBody))
+                                .content(requestBody)
+                                .accept(MediaType.APPLICATION_JSON))
                 .andDo(print());
 
         // then
         resultActions
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("id").value(productOptionId))
                 .andExpect(jsonPath("productDto").exists())
                 .andExpect(jsonPath("option1").value(newOptionName1))
@@ -197,13 +204,13 @@ class ProductOptionControllerTest {
                         patch("/api/v1/products/{productId}/productOptions/{productOptionId}/stock", productId,
                                 productOptionId)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(requestBody))
+                                .content(requestBody)
+                                .accept(MediaType.APPLICATION_JSON))
                 .andDo(print());
 
         // then
         resultActions
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json("25"))
                 .andDo(print());
     }
