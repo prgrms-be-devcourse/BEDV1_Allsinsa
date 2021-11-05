@@ -25,7 +25,6 @@ import com.progm.allsinsa.order.repository.OrderRepository;
 import com.progm.allsinsa.order.service.OrderService;
 import javassist.NotFoundException;
 
-@EnableJpaAuditing
 @SpringBootTest
 public class OrderServiceTest {
 

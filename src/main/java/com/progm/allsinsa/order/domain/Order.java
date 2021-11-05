@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.progm.allsinsa.global.domain.BaseTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -30,10 +31,9 @@ import lombok.ToString;
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Table(name = "orders")
-public class Order {
+public class Order extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -41,7 +41,6 @@ public class Order {
     @Column(name = "order_number", unique = true, nullable = false)
     private String orderNumber;
 
-    // 멤버 매핑으로 변경 예정
     // ManyToOne
     private Long memberId;
 
@@ -71,12 +70,6 @@ public class Order {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderProduct> orderProducts = new ArrayList<>();
-
-    @CreatedDate
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
 
     public Order(Long memberId, String recipientName, String phoneNumber, String shippingAddress, String memo,
             int totalAmount) {
