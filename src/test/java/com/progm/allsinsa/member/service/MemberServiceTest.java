@@ -113,6 +113,6 @@ class MemberServiceTest {
     @Order(6)
     void deleteMemberTest() {
         MemberDto dto = assertDoesNotThrow(() -> memberService.findByEmail(memberEmail));
-        assertDoesNotThrow(() -> memberService.deleteMember(dto));
+        assertDoesNotThrow(() -> memberService.deleteMember(dto.getId()));
     }
 }

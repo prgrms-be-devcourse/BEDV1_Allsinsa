@@ -51,14 +51,14 @@ public class MemberController {
         return ResponseEntity.ok(dto);
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deleteMember(@RequestBody MemberDto memberDto)
+    @DeleteMapping("/{memberId}")
+    public ResponseEntity<Void> deleteMember(@PathVariable Long memberId)
             throws NotFoundException {
-        memberService.deleteMember(memberDto);
+        memberService.deleteMember(memberId);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
+    @PutMapping("/{memberId}")
     public ResponseEntity<MemberDto> updateMember(@RequestBody MemberDto memberDto)
             throws NotFoundException {
         MemberDto dto = memberService.updateMember(memberDto);

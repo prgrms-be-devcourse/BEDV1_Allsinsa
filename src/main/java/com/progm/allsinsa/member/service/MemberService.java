@@ -39,12 +39,12 @@ public class MemberService {
     }
 
     @Transactional
-    public void deleteMember(MemberDto memberDto) throws NotFoundException {
+    public void deleteMember(Long memberId) throws NotFoundException {
         // delete cart
-        CartDto cart = cartService.findCartByMemberId(memberDto.getId());
+        CartDto cart = cartService.findCartByMemberId(memberId);
         cartService.deleteCart(cart.getId());
         // delete member
-        memberRepository.deleteById(memberDto.getId());
+        memberRepository.deleteById(memberId);
     }
 
     @Transactional(readOnly = true)
