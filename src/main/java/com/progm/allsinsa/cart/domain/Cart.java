@@ -9,9 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.progm.allsinsa.member.domain.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,33 +31,19 @@ public class Cart {
     @Column(name = "id")
     private Long id;
 
-    // TODO : Member
-    //@OneToOne(
-    //@JoinColumn(name = "member_id", referencedColumnName = "id")
-    //private Member member
-    @Column(name = "member_id", nullable = false)
-    private Long member;
+    @OneToOne
+    @JoinColumn(name = "member_id", referencedColumnName = "id")
+    private Member member;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartProduct> cartProducts = new ArrayList<>();
 
-    // construct
-    public Cart(Long member) {
-        this.member = member;
-    }
-
-    // Mapping
-    // TODO : Member
-    /*public void setMember(Member member) {
-        if(Objects.nonNull(this.member)) {
-            member.getOrders().remove(this);
-        }
-        this.member = member;
-        member.getCart().add(this);
-    }*/
-
     public void addCartProduct(CartProduct cartProduct) {
         cartProduct.setCart(this);
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
     }
 
 }
