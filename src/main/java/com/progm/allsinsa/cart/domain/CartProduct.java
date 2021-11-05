@@ -1,7 +1,7 @@
 package com.progm.allsinsa.cart.domain;
 
+import com.progm.allsinsa.product.domain.ProductOption;
 import java.util.Objects;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.progm.allsinsa.product.domain.ProductOption;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,7 +45,7 @@ public class CartProduct {
     }
 
     public void setCart(Cart cart) {
-        if (Objects.nonNull(this.cart)) {
+        if(Objects.nonNull(this.cart)) {
             this.cart.getCartProducts().remove(this);
         }
 
