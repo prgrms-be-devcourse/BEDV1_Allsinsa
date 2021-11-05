@@ -1,0 +1,59 @@
+:hardbreaks:
+ifndef::snippets[]
+:snippets: ../../../target/generated-snippets
+endif::[]
+
+== 장바구니
+
+=== 장바구니 조회
+=== GET /api/v1/carts/{cartId}
+
+.Request
+include::{snippets}/cart-read/http-request.adoc[]
+
+.Response
+include::{snippets}/cart-read/http-response.adoc[]
+include::{snippets}/cart-read/response-fields.adoc[]
+
+== 장바구니 항목
+
+=== 장바구니 항목 추가
+=== POST /api/v1/cart-products
+
+.Request
+include::{snippets}/cartProducts-save/http-request.adoc[]
+include::{snippets}/cartProducts-save/request-fields.adoc[]
+
+.Response
+include::{snippets}/cartProducts-save/http-response.adoc[]
+include::{snippets}/cartProducts-save/response-fields.adoc[]
+
+=== 장바구니 항목 제거
+=== DELETE /api/v1/cart-products/{cartProductId}
+
+.Request
+include::{snippets}/cartProducts-delete/http-request.adoc[]
+
+.Response
+include::{snippets}/cartProducts-delete/http-response.adoc[]
+
+=== 장바구니 항목 조회
+=== PUT /api/v1/cart-products/{cartProductId}
+
+.Request
+include::{snippets}/cartProducts-find/http-request.adoc[]
+
+.Response
+include::{snippets}/cartProducts-find/http-response.adoc[]
+include::{snippets}/cartProducts-find/response-fields.adoc[]
+
+=== 장바구니 항목 수정
+=== PUT /api/v1/cart-products
+
+.Request
+include::{snippets}/cartProducts-fix/http-request.adoc[]
+include::{snippets}/cartProducts-fix/request-fields.adoc[]
+
+.Response
+include::{snippets}/cartProducts-fix/http-response.adoc[]
+include::{snippets}/cartProducts-fix/response-fields.adoc[]
