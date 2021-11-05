@@ -8,7 +8,7 @@ endif::[]
 === 주문 생성
 
 .Path
-==== /api/v1/orders
+==== POST /api/v1/orders
 
 .Request
 include::{snippets}/order-create/http-request.adoc[]
@@ -20,7 +20,7 @@ include::{snippets}/order-create/response-fields.adoc[]
 
 === 주문 조회 (전부)
 
-==== /api/v1/orders
+==== GET /api/v1/orders
 
 .Request
 include::{snippets}/order-read-all/http-request.adoc[]
@@ -31,7 +31,7 @@ include::{snippets}/order-read-all/response-fields-beneath-content.adoc[]
 
 === 주문 조회 (멤버별)
 
-==== /api/v1/orders?memberId=id
+==== GET /api/v1/orders?memberId=id
 
 .Request
 include::{snippets}/order-read-member/http-request.adoc[]
@@ -42,7 +42,7 @@ include::{snippets}/order-read-member/response-fields-beneath-content.adoc[]
 
 === 주문 조회 (주문번호 단건)
 
-==== /api/v1/orders/{number}
+==== GET /api/v1/orders/{number}
 
 .Request
 include::{snippets}/order-read-number/http-request.adoc[]
