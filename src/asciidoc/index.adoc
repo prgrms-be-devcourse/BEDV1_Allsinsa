@@ -49,3 +49,26 @@ include::{snippets}/order-read-number/path-parameters.adoc[]
 .Response
 include::{snippets}/order-read-number/http-response.adoc[]
 include::{snippets}/order-read-number/response-fields.adoc[]
+
+=== 쿠폰 정보 생성
+==== /api/v1/coupon-info
+
+.Request
+include::{snippets}/coupon-info-create/http-request.adoc[]
+include::{snippets}/coupon-info-create/request-fields.adoc[]
+
+
+.Response
+include::{snippets}/coupon-info-create/http-response.adoc[]
+include::{snippets}/coupon-info-create/response-fields.adoc[]
+
+=== 쿠폰 발급
+==== /api/v1/coupons
+
+.Request
+include::{snippets}/coupon-issue/http-request.adoc[]
+include::{snippets}/coupon-issue/request-fields.adoc[]
+
+.Response
+include::{snippets}/coupon-issue/http-response.adoc[]
+include::{snippets}/coupon-issue/response-fields.adoc[]
