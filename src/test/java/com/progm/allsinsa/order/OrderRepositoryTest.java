@@ -23,7 +23,6 @@ import com.progm.allsinsa.order.repository.OrderRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@EnableJpaAuditing
 @SpringBootTest
 public class OrderRepositoryTest {
 

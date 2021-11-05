@@ -28,7 +28,6 @@ import com.progm.allsinsa.order.dto.CreateOrderProductDto;
 import com.progm.allsinsa.order.dto.CreateOrderRequestDto;
 import com.progm.allsinsa.order.service.OrderService;
 
-@EnableJpaAuditing
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
 @SpringBootTest
