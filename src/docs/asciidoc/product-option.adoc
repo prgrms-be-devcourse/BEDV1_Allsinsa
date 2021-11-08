@@ -1,0 +1,59 @@
+:hardbreaks:
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+
+== 제품 옵션
+
+=== 제품 옵션 생성
+
+=== POST /api/v1/products/{productId}/productOptions
+
+.Request
+include::{snippets}/save-product-option/http-request.adoc[]
+include::{snippets}/save-product-option/request-fields.adoc[]
+
+.Response
+include::{snippets}/save-product-option/http-response.adoc[]
+include::{snippets}/save-product-option/response-fields.adoc[]
+
+---
+
+=== 제품별 제품 옵션 조회
+
+=== GET /api/v1/products/{productId}/productOptions
+
+.Request
+include::{snippets}/get-product-options/http-request.adoc[]
+
+.Response
+include::{snippets}/get-product-options/http-response.adoc[]
+include::{snippets}/get-product-options/response-fields.adoc[]
+
+---
+
+=== 제품 옵션명 수정
+
+=== PATCH /api/v1/products/{productId}/productOptions/optionName
+
+.Request
+include::{snippets}/update-product-option-names/http-request.adoc[]
+include::{snippets}/update-product-option-names/request-fields.adoc[]
+
+.Response
+include::{snippets}/update-product-option-names/http-response.adoc[]
+include::{snippets}/update-product-option-names/response-fields.adoc[]
+
+---
+
+=== 제품 옵션 재고 추가
+
+=== PATCH /api/v1/products/{productId}/productOptions/stock
+
+.Request
+include::{snippets}/add-product-option-stock/http-request.adoc[]
+include::{snippets}/add-product-option-stock/request-fields.adoc[]
+
+.Response
+include::{snippets}/add-product-option-stock/http-response.adoc[]
+include::{snippets}/add-product-option-stock/response-fields.adoc[]

@@ -4,6 +4,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+src/main/resources/application.yml
 
 ### STS ###
 .apt_generated
@@ -253,5 +254,8 @@ gradle-app.setting
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+
+### YAML ###
+.yaml
 
 # End of https://www.toptal.com/developers/gitignore/api/gradle,macos,windows,java,intellij
