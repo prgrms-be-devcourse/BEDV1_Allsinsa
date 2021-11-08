@@ -11,6 +11,8 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -22,10 +24,8 @@ import com.progm.allsinsa.product.dto.ProductRequestDto;
 import com.progm.allsinsa.product.repository.ProductRepository;
 import com.progm.allsinsa.product.service.ProductService;
 import javassist.NotFoundException;
-import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest
-@Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductServiceTest {
     @Autowired
@@ -33,6 +33,8 @@ class ProductServiceTest {
 
     @Autowired
     ProductRepository productRepository;
+
+    Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Test
     @Order(1)
